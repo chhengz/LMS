@@ -35,12 +35,10 @@ namespace LMS
         public LMS_FORM(Staff staff)
         {
             InitializeComponent();
-            //this.ControlBox = false;
             
+            //this.ControlBox = false;
             // Optimize layout rendering
             this.SuspendLayout();
-
-
             loggedInStaff = staff;
 
             // 🔹 Example of role-based access

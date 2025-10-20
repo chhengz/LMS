@@ -13,26 +13,20 @@ namespace LMS
         private Staff loggedInStaff;
         private int row_selected = -1;
 
-
-        private void BooksForm_Load(object sender, EventArgs e)
-        {
-            //LoadBooks();
-        }
-
-
         public BooksForm(Staff staff)
         {
             InitializeComponent();
+            loggedInStaff = staff;
             LoadBooks();
 
-            loggedInStaff = staff;
+
+            txtISBN.Enabled = false;
+            txtAvailableQuantity.Enabled = false; // Disable Available Quantity textbox for manual editing
 
             if (loggedInStaff.Role != "Admin")
             {
                 btnDelete.Enabled = false; // Disable delete button for non-admin users
             }
-
-
         }
 
 
@@ -60,20 +54,29 @@ namespace LMS
         private void ConfigureDataGridView()
         {
             // Optional: Customize column headers and visibility
-            dgvBooks.AutoGenerateColumns = true; // Automatically generate columns based on Book properties
-            if (dgvBooks.Columns["BookID"] != null) dgvBooks.Columns["BookID"].HeaderText = "Book ID";
-            if (dgvBooks.Columns["ISBN"] != null) dgvBooks.Columns["ISBN"].HeaderText = "ISBN";
-            if (dgvBooks.Columns["Title"] != null) dgvBooks.Columns["Title"].HeaderText = "Book Title";
-            if (dgvBooks.Columns["Author"] != null) dgvBooks.Columns["Author"].HeaderText = "Author";
-            if (dgvBooks.Columns["Publisher"] != null) dgvBooks.Columns["Publisher"].HeaderText = "Publisher";
-            if (dgvBooks.Columns["PublishedYear"] != null) dgvBooks.Columns["PublishedYear"].HeaderText = "Published Year";
-            if (dgvBooks.Columns["Category"] != null) dgvBooks.Columns["Category"].HeaderText = "Category";
-            if (dgvBooks.Columns["Quantity"] != null) dgvBooks.Columns["Quantity"].HeaderText = "Total Quantity";
-            if (dgvBooks.Columns["AvailableQuantity"] != null) dgvBooks.Columns["AvailableQuantity"].HeaderText = "Available Quantity";
-            if (dgvBooks.Columns["CreatedAt"] != null) dgvBooks.Columns["CreatedAt"].HeaderText = "Created At";
+            dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Automatically generate columns based on Book properties
 
-            // Optional: Hide columns if needed
-            // if (dgvBooks.Columns["CreatedAt"] != null) dgvBooks.Columns["CreatedAt"].Visible = false;
+            if (dgvBooks.Columns.Count > 0)
+            {
+
+                if (dgvBooks.Columns["BookID"] != null) dgvBooks.Columns["BookID"].HeaderText = "Book ID";
+                if (dgvBooks.Columns["ISBN"] != null) dgvBooks.Columns["ISBN"].HeaderText = "ISBN";
+                if (dgvBooks.Columns["Title"] != null) dgvBooks.Columns["Title"].HeaderText = "Book Title";
+                if (dgvBooks.Columns["Author"] != null) dgvBooks.Columns["Author"].HeaderText = "Author";
+                if (dgvBooks.Columns["Publisher"] != null) dgvBooks.Columns["Publisher"].HeaderText = "Publisher";
+                if (dgvBooks.Columns["PublishedYear"] != null) dgvBooks.Columns["PublishedYear"].HeaderText = "Published Year";
+                if (dgvBooks.Columns["Category"] != null) dgvBooks.Columns["Category"].HeaderText = "Category";
+                if (dgvBooks.Columns["Quantity"] != null) dgvBooks.Columns["Quantity"].HeaderText = "Total Quantity";
+                if (dgvBooks.Columns["AvailableQuantity"] != null) dgvBooks.Columns["AvailableQuantity"].HeaderText = "Available Quantity";
+                if (dgvBooks.Columns["CreatedAt"] != null) dgvBooks.Columns["CreatedAt"].HeaderText = "Created At";
+                
+                // if (dgvBooks.Columns["CreatedAt"] != null) dgvBooks.Columns["CreatedAt"].Visible = false;
+            }
+            dgvBooks.AllowUserToAddRows = false;
+            dgvBooks.AllowUserToDeleteRows = false;
+            dgvBooks.ReadOnly = true;
+            dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvBooks.MultiSelect = false;
         }
 
 
@@ -99,17 +102,16 @@ namespace LMS
                 {
                     var newBook = new Book
                     {
-                        ISBN = txtISBN.Text,
-                        Title = txtTitle.Text,
+                        ISBN = string.IsNullOrWhiteSpace(txtISBN.Text) ? null : txtISBN.Text,
+                        Title = string.IsNullOrWhiteSpace(txtTitle.Text) ? null : txtTitle.Text,
                         Author = string.IsNullOrWhiteSpace(txtAuthor.Text) ? null : txtAuthor.Text,
                         Publisher = string.IsNullOrWhiteSpace(txtPublisher.Text) ? null : txtPublisher.Text,
                         //PublishedYear = int.TryParse(numYear.Value.ToString(), out int year) ? (int?)year : null,
-                        PublishedYear = int.TryParse(numYear.Text, out int year) ? year : 0,
-                        //Category = string.IsNullOrWhiteSpace(txtCategory.Text) ? null : txtCategory.Text,
-                        //Category = cbxCategory.SelectedValue == null ? null : cbxCategory.SelectedValue.ToString(),
-                        Category = txtCategory.Text,
+                        PublishedYear = int.TryParse(numYear.Text, out int year) ? (int?)year : 0,
+                        Category = string.IsNullOrWhiteSpace(txtCategory.Text) ? null : txtCategory.Text,
                         Quantity = int.TryParse(numQty.Text, out int qty) ? qty : 0,
-                        AvailableQuantity = int.TryParse(txtAvailableQuantity.Text, out int availQty) ? availQty : 0
+                        AvailableQuantity = int.TryParse(txtAvailableQuantity.Text, out int availQty) ? availQty : 0,
+                        CreatedAt = Convert.ToDateTime(dobCreatedAt.Value),
                     };
                     Books.AddBook(newBook);
                     MessageBox.Show("Book added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -141,6 +143,13 @@ namespace LMS
             }
         }
 
+
+        // btn edit/update book (UPDATE)
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtISBN.Clear();
@@ -151,7 +160,11 @@ namespace LMS
             txtCategory.Clear();
             numQty.Clear();
             txtAvailableQuantity.Clear();
+            dobCreatedAt.Value = DateTime.Now;
             row_selected = -1; // Reset selected row index
+            btnSave.Text = "Add New Book";
+            btnSave.Enabled = true;
+            btnDelete.Enabled = false;
         }
 
         private void dgvBooks_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -184,6 +197,12 @@ namespace LMS
                 txtCategory.Text = row.Cells["Category"].Value?.ToString() ?? "";
                 numQty.Text = row.Cells["Quantity"].Value?.ToString() ?? "";
                 txtAvailableQuantity.Text = row.Cells["AvailableQuantity"].Value?.ToString() ?? "";
+                //dobCreatedAt.Value = Convert.ToDateTime(row.Cells["CreatedAt"].Value);
+                dobCreatedAt.Value = row.Cells["CreatedAt"].Value != null && row.Cells["CreatedAt"].Value != DBNull.Value
+                    ? Convert.ToDateTime(row.Cells["CreatedAt"].Value)
+                    : DateTime.Now;
+                btnSave.Enabled = false;
+                btnEdit.Text = "Update Book";
             }
             catch (Exception ex)
             {
@@ -194,7 +213,6 @@ namespace LMS
     }
 
 
-        // btn edit/update book (UPDATE)
 
 
 

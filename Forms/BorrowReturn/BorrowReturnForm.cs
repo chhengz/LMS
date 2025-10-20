@@ -13,21 +13,22 @@ namespace LMS
         private int lblBorrowID { set; get; }
         public BorrowReturnForm(Staff staff)
         {
+            InitializeComponent();
             // Optimize layout rendering
             this.SuspendLayout();
-
             currentStaff = staff;
 
-            InitializeComponent();
             LoadBorrower();
             LoadBooks();
+
             btnReturn.Enabled = false;
             txtStatus.Enabled = false;
+
+            //txtStatus.Enabled = false;
 
             txtBorrowerContact.Enabled = false;
             cbx_contact_check.CheckedChanged += (s, e) =>
             {
-                //txtPassword.UseSystemPasswordChar = !cbxShowPass.Checked;
                 txtBorrowerContact.Enabled = !cbx_contact_check.Checked; // checked means enable textbox
                 if (cbx_contact_check.Checked)
                 {
@@ -57,6 +58,7 @@ namespace LMS
             }
         }
 
+      
 
         // handle LoadBook to show book data on datagrid view
         private void LoadBorrower()
@@ -72,7 +74,6 @@ namespace LMS
                 MessageBox.Show($"Error loading books: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         // handle OnChange to update or reload data when database change 
         public void OnChange(object caller, SqlNotificationEventArgs e)
@@ -124,20 +125,19 @@ namespace LMS
                 txtTID.Text = selectedRow.Cells["TransactionID"].Value.ToString();
                 txtBorrowerName.Text = selectedRow.Cells["BorrowerName"].Value.ToString();
                 dtpBorrowDate.Value = Convert.ToDateTime(selectedRow.Cells["BorrowDate"].Value);
-                txtStatus.Text = selectedRow.Cells["status"].Value.ToString();
+                txtStatus.Text = selectedRow.Cells["Status"].Value.ToString();
+                string selectedBookTitle = selectedRow.Cells["BookTitle"].Value.ToString();
+                int index = cbBook.FindStringExact(selectedBookTitle);
+                if (index >= 0)
+                {
+                    cbBook.SelectedIndex = index;
+                }
+                cbBook.SelectedValue = selectedRow.Cells["BookID"].Value;
+
                 string status = selectedRow.Cells["Status"].Value.ToString();
                 btnReturn.Enabled = status == "Borrowed"; // Enable return button only if status is "Borrowed"
 
                 //dtpDueDate.Value = Convert.ToDateTime(selectedRow.Cells["DueDate"].Value);
-
-                if (status == "Borrowed")
-                {
-                    btnBorrow.Enabled = false;
-                }else
-                {
-                    btnBorrow.Enabled = true;
-                }
-
             }
             catch (Exception ex)
             {
@@ -158,22 +158,29 @@ namespace LMS
                 int bookId = Convert.ToInt32(cbBook.SelectedValue);
                 string borrowerName = txtBorrowerName.Text.Trim();
                 string borrowerContact = txtBorrowerContact.Text.Trim();
-                DateTime dueDate = dtpBorrowDate.Value;
-                int staffId = 1; // Replace with logged-in staff ID later
+                DateTime dueDate = Convert.ToDateTime(dtpBorrowDate.Value);
+                int staffId = currentStaff.StaffID;
+
+                //MessageBox.Show($"{bookId},{borrowerName},{borrowerContact},{dueDate},{staffId}");
 
                 Borrowers.BorrowBook(bookId, borrowerName, borrowerContact, dueDate, staffId);
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadBorrower(); // refresh grid
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error borrowing book: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                ClearForm();
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-
+            ClearForm();
         }
 
         private void btnReturn_Click(object sender, EventArgs e)
@@ -190,31 +197,27 @@ namespace LMS
 
             if (confirm == DialogResult.Yes)
             {
-                using (var conn = Connection.GetConn())
-                using (var cmd = new SqlCommand(
-                    "UPDATE Borrowers SET Status = 'Returned', ReturnDate = @ReturnDate WHERE BorrowID = @BorrowID", conn))
-                {
-                    cmd.Parameters.AddWithValue("@ReturnDate", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@BorrowID", lblBorrowID.ToString());
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
+                int transactionId = Convert.ToInt32(txtTID.Text);
+                Borrowers.ReturnBook(transactionId);
 
                 MessageBox.Show("Book returned successfully ✅");
-                //LoadBorrowedBooks();
+
                 LoadBorrower();
                 ClearForm();
 
-                btnReturn.Enabled = false;
             }
         }
 
         private void ClearForm()
         {
             lblBorrowID = 0;
+            txtTID.Clear();
             txtBorrowerName.Clear();
+            txtBorrowerContact.Clear();
             cbBook.SelectedIndex = -1;
             dtpBorrowDate.Value = DateTime.Now;
+            btnBorrow.Text = "Add New Borrower";
+            btnReturn.Enabled = false;
             //dtpBorrowDate.Value = DateTime.Now;
         }
 

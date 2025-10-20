@@ -89,8 +89,16 @@ namespace LMS.Forms.BorrowReturn
             }
         }
 
-
-
+        public static void RemoveBorrowRecord(int transactionId)
+        {
+            using (var conn = Connection.GetConn())
+            using (var cmd = new SqlCommand("sp_RemoveBorrowRecord", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@TransactionID", transactionId);
+                conn.Open(); cmd.ExecuteNonQuery();
+            }
+        }
 
 
     }

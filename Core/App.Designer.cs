@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LMS_FORM));
             this.btnBook = new System.Windows.Forms.Button();
             this.btnBRW_RTN = new System.Windows.Forms.Button();
             this.panelMenu = new System.Windows.Forms.Panel();
@@ -154,7 +155,7 @@
             // 
             // panelLogo
             // 
-            this.panelLogo.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panelLogo.BackColor = System.Drawing.Color.DarkGray;
             this.panelLogo.Controls.Add(this.label1);
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
@@ -167,16 +168,16 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(23, 14);
+            this.label1.Location = new System.Drawing.Point(11, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 37);
+            this.label1.Size = new System.Drawing.Size(179, 37);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Library";
+            this.label1.Text = "Dashboard";
             // 
             // panelDesktopPane
             // 
             this.panelDesktopPane.AutoScroll = true;
-            this.panelDesktopPane.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panelDesktopPane.BackColor = System.Drawing.SystemColors.Control;
             this.panelDesktopPane.Location = new System.Drawing.Point(200, 70);
             this.panelDesktopPane.Name = "panelDesktopPane";
             this.panelDesktopPane.Size = new System.Drawing.Size(865, 490);
@@ -184,7 +185,7 @@
             // 
             // panelTitleBar
             // 
-            this.panelTitleBar.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.panelTitleBar.BackColor = System.Drawing.Color.Gray;
             this.panelTitleBar.Controls.Add(this.lblTitle);
             this.panelTitleBar.Location = new System.Drawing.Point(200, 0);
             this.panelTitleBar.Name = "panelTitleBar";
@@ -206,12 +207,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1064, 555);
             this.Controls.Add(this.panelTitleBar);
             this.Controls.Add(this.panelDesktopPane);
             this.Controls.Add(this.panelMenu);
             this.Font = new System.Drawing.Font("Khmer OS Battambang", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1080, 594);
