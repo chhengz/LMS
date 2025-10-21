@@ -1,5 +1,5 @@
 ﻿using LMS.Class;
-using LMS.Forms.Staff;
+
 
 //using LMS.Controls.BookControl;
 using LMS.Forms.Welcome;
@@ -148,7 +148,7 @@ namespace LMS
 
         private void btnStaffs_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new StaffsForm(), sender);
+            OpenChildForm(new StaffsForm(loggedInStaff), sender);
         }
     }
 }

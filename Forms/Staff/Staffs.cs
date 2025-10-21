@@ -51,6 +51,8 @@ namespace LMS
                         s.Email = r.GetString(r.GetOrdinal("Email"));
                         s.Phone = r.IsDBNull(r.GetOrdinal("Phone")) ? null : r.GetString(r.GetOrdinal("Phone"));
                         s.Role = r.IsDBNull(r.GetOrdinal("Role")) ? null : r.GetString(r.GetOrdinal("Role"));
+                        s.Username = r.GetString(r.GetOrdinal("Username"));
+                        s.Password = r.GetString(r.GetOrdinal("Password"));
                         s.CreatedAt = r.GetDateTime(r.GetOrdinal("CreatedAt"));
                         list.Add(s);
                     }
