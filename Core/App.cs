@@ -26,10 +26,10 @@ namespace LMS
         private int tempIndex;
         private Form activeForm;
 
-        private Panel contentPanel;
+        //private Panel contentPanel;
         private Staff loggedInStaff;
         private String APP_NAME_SHORT = "LMS";
-        private String APP_NAME_LONG = "Library Management System";
+        //private String APP_NAME_LONG = "Library Management System";
 
 
         public LMS_FORM(Staff staff)
@@ -63,12 +63,15 @@ namespace LMS
                 btnBRW_RTN.Enabled = false;
                 btnStaffs.Enabled = false;
             }
+
+
+            this.ResumeLayout();
         }
 
 
         private void LMS_FORM_Load(object sender, EventArgs e)
         {
-            this.Text = $"{APP_NAME_SHORT} - {loggedInStaff.FullName} [{loggedInStaff.Role}] - {DateTime.Now.ToString()}";
+            this.Text = $"{APP_NAME_SHORT} - ID:{loggedInStaff.StaffID}|Name:{loggedInStaff.FullName}|Role: {loggedInStaff.Role} - {DateTime.Now.ToString()}";
             //this.Tag = $"Library Management System";
             //lblWelcome.Text = $"{loggedInStaff.FullName} [{loggedInStaff.Role}]";
 
