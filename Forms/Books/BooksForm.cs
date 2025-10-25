@@ -166,7 +166,7 @@ namespace LMS
             row_selected = -1; // Reset selected row index
             btnSave.Text = "Add New";
 
-
+            txtISBN.Enabled = true;
             btnSave.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
