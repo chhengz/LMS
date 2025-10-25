@@ -19,12 +19,12 @@ namespace LMS
 
             Staff loggedInStaff = new Staff
             {
-                StaffID = 1,
+                StaffID = 2,
                 FullName = "Admin",
                 Role = "Admin" // "Admin", "Librarian", "User", etc.
             };
-            Application.Run(new Login_form());
-            //Application.Run(new LMS_FORM(loggedInStaff));
+            //Application.Run(new Login_form());
+            Application.Run(new LMS_FORM(loggedInStaff));
         }
     }
 }

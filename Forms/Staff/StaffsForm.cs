@@ -21,16 +21,17 @@ namespace LMS
             InitializeComponent();
             loggedInStaff = staff;
 
-            MessageBox.Show($"Logged in as: {loggedInStaff.StaffID} | {loggedInStaff.Username} ({loggedInStaff.Role})", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show($"Logged in as: {loggedInStaff.StaffID} | {loggedInStaff.Username} ({loggedInStaff.Role})", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Optimize layout rendering
             this.SuspendLayout();
 
             txtPass.UseSystemPasswordChar = true;
             txtSID.Enabled = false;
+            txtRole.Enabled = false;
 
             LoadStaffs();
-            LoadRoles();
+            //LoadRoles();
 
             if (loggedInStaff.Role != "Admin")
             {
@@ -40,7 +41,7 @@ namespace LMS
             }
 
             // Handle show password checkbox
-            txtPass.Enabled = false;
+            //txtPass.Enabled = false;
             chPass.CheckedChanged += (s, e) =>
             {
                 txtPass.UseSystemPasswordChar = !chPass.Checked;
@@ -51,13 +52,13 @@ namespace LMS
         }
 
         // ===================== LOAD METHODS =====================
-        private void LoadRoles()
-        {
-            // Define available roles (you can modify these)
-            var roles = new List<string> { "Admin", "Librarian", "Assistant", "Staff" };
-            cbRole.DataSource = roles;
-            cbRole.SelectedIndex = -1;
-        }
+        //private void LoadRoles()
+        //{
+        //    // Define available roles (you can modify these)
+        //    var roles = new List<string> { "Admin", "Librarian", "Assistant", "Staff" };
+        //    cbRole.DataSource = roles;
+        //    cbRole.SelectedIndex = -1;
+        //}
 
         private void LoadStaffs()
         {
@@ -120,7 +121,8 @@ namespace LMS
                 txtUser.Text = row.Cells["Username"].Value?.ToString() ?? "";
                 txtPass.Text = row.Cells["Password"].Value?.ToString() ?? "";
 
-                cbRole.SelectedItem = row.Cells["Role"].Value?.ToString();
+                //cbRole.SelectedItem = row.Cells["Role"].Value?.ToString();
+                txtRole.Text = row.Cells["Role"].Value?.ToString() ?? "";
 
                 dobCreatedAt.Value = row.Cells["CreatedAt"].Value != null && row.Cells["CreatedAt"].Value != DBNull.Value
                     ? Convert.ToDateTime(row.Cells["CreatedAt"].Value)
@@ -128,8 +130,10 @@ namespace LMS
 
                 btnSave.Enabled = false;
                 btnEdit.Enabled = true;
-                btnDelete.Enabled = loggedInStaff.Role == "Admin";
+                //btnDelete.Enabled = loggedInStaff.Role == "Admin";
+                btnDelete.Enabled = true;
                 txtPass.Enabled = true;
+                lbSAcc.Text = "Staff Account";
             }
             catch (Exception ex)
             {
@@ -142,7 +146,7 @@ namespace LMS
         {
             try
             {
-                if (txtFN.Text != "" && txtEmail.Text != "" && txtUser.Text != "" && txtPass.Text != "" && cbRole.SelectedIndex != -1)
+                if (txtFN.Text != "" && txtEmail.Text != "" && txtUser.Text != "" && txtPass.Text != "" && txtRole.Text != "")
                 {
                     var newStaff = new Staff
                     {
@@ -151,7 +155,8 @@ namespace LMS
                         Phone = txtPhone.Text,
                         Username = txtUser.Text,
                         Password = txtPass.Text,
-                        Role = cbRole.SelectedItem.ToString(),
+                        //Role = cbRole.SelectedItem.ToString(),
+                        Role = txtRole.Text,
                         //CreatedAt = dobCreatedAt.Value
                     };
 
@@ -192,7 +197,8 @@ namespace LMS
                     Phone = txtPhone.Text,
                     Username = txtUser.Text,
                     Password = txtPass.Text,
-                    Role = cbRole.SelectedItem?.ToString() ?? "",
+                    //Role = cbRole.SelectedItem?.ToString() ?? "",
+                    Role = txtRole.Text,
                     //CreatedAt = dobCreatedAt.Value
                 };
 
@@ -285,11 +291,26 @@ namespace LMS
             txtPhone.Clear();
             txtUser.Clear();
             txtPass.Clear();
-            cbRole.SelectedIndex = -1;
+            //cbRole.SelectedIndex = -1;
+            txtRole.Clear();
+
+            lbSAcc.Text = "Make Staff Account";
 
             btnSave.Enabled = true;
             btnEdit.Enabled = false;
-            btnDelete.Enabled = loggedInStaff.Role == "Admin";
+            btnDelete.Enabled = false;
+            //btnDelete.Enabled = loggedInStaff.Role == "Admin";
+        }
+
+        // =============== ROLE BUTTON CHECK ===============
+        private void r1_Click(object sender, EventArgs e)
+        {
+            txtRole.Text = "Admin";
+        }
+
+        private void r2_Click(object sender, EventArgs e)
+        {
+            txtRole.Text = "Librarian";
         }
     }
 }

@@ -29,59 +29,23 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LMS_FORM));
-            this.btnBook = new System.Windows.Forms.Button();
-            this.btnBRW_RTN = new System.Windows.Forms.Button();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.panelMenu_sidbar = new System.Windows.Forms.Panel();
             this.btnStaffs = new System.Windows.Forms.Button();
-            this.btnHome = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelLogo = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelDesktopPane = new System.Windows.Forms.Panel();
             this.panelTitleBar = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.btnBRW_RTN = new System.Windows.Forms.Button();
+            this.btnBook = new System.Windows.Forms.Button();
+            this.btnHome = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
             this.panelMenu_sidbar.SuspendLayout();
             this.panelLogo.SuspendLayout();
             this.panelTitleBar.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnBook
-            // 
-            this.btnBook.BackColor = System.Drawing.Color.DarkGray;
-            this.btnBook.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnBook.FlatAppearance.BorderSize = 0;
-            this.btnBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBook.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnBook.Location = new System.Drawing.Point(0, 115);
-            this.btnBook.Margin = new System.Windows.Forms.Padding(0);
-            this.btnBook.Name = "btnBook";
-            this.btnBook.Size = new System.Drawing.Size(200, 48);
-            this.btnBook.TabIndex = 0;
-            this.btnBook.Text = "Books";
-            this.btnBook.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBook.UseVisualStyleBackColor = false;
-            this.btnBook.Click += new System.EventHandler(this.btnBook_Click);
-            // 
-            // btnBRW_RTN
-            // 
-            this.btnBRW_RTN.BackColor = System.Drawing.Color.DarkGray;
-            this.btnBRW_RTN.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnBRW_RTN.FlatAppearance.BorderSize = 0;
-            this.btnBRW_RTN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBRW_RTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBRW_RTN.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnBRW_RTN.Location = new System.Drawing.Point(0, 163);
-            this.btnBRW_RTN.Margin = new System.Windows.Forms.Padding(0);
-            this.btnBRW_RTN.Name = "btnBRW_RTN";
-            this.btnBRW_RTN.Size = new System.Drawing.Size(200, 48);
-            this.btnBRW_RTN.TabIndex = 1;
-            this.btnBRW_RTN.Text = "Borrow/Return";
-            this.btnBRW_RTN.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnBRW_RTN.UseVisualStyleBackColor = false;
-            this.btnBRW_RTN.Click += new System.EventHandler(this.btnBRW_RTN_Click);
             // 
             // panelMenu
             // 
@@ -117,33 +81,16 @@
             this.btnStaffs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStaffs.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStaffs.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnStaffs.Image = global::LMS.Properties.Resources.user_48px;
+            this.btnStaffs.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnStaffs.Location = new System.Drawing.Point(0, 211);
             this.btnStaffs.Margin = new System.Windows.Forms.Padding(0);
             this.btnStaffs.Name = "btnStaffs";
             this.btnStaffs.Size = new System.Drawing.Size(200, 48);
             this.btnStaffs.TabIndex = 3;
             this.btnStaffs.Text = "Staffs";
-            this.btnStaffs.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnStaffs.UseVisualStyleBackColor = false;
             this.btnStaffs.Click += new System.EventHandler(this.btnStaffs_Click);
-            // 
-            // btnHome
-            // 
-            this.btnHome.BackColor = System.Drawing.Color.DarkGray;
-            this.btnHome.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnHome.FlatAppearance.BorderSize = 0;
-            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHome.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnHome.Location = new System.Drawing.Point(0, 67);
-            this.btnHome.Margin = new System.Windows.Forms.Padding(0);
-            this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(200, 48);
-            this.btnHome.TabIndex = 2;
-            this.btnHome.Text = "Home";
-            this.btnHome.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnHome.UseVisualStyleBackColor = false;
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // panel2
             // 
@@ -202,6 +149,63 @@
             this.lblTitle.Size = new System.Drawing.Size(143, 37);
             this.lblTitle.TabIndex = 6;
             this.lblTitle.Text = "Library";
+            // 
+            // btnBRW_RTN
+            // 
+            this.btnBRW_RTN.BackColor = System.Drawing.Color.DarkGray;
+            this.btnBRW_RTN.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnBRW_RTN.FlatAppearance.BorderSize = 0;
+            this.btnBRW_RTN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBRW_RTN.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBRW_RTN.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnBRW_RTN.Image = global::LMS.Properties.Resources.borrow_book_48px;
+            this.btnBRW_RTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBRW_RTN.Location = new System.Drawing.Point(0, 163);
+            this.btnBRW_RTN.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBRW_RTN.Name = "btnBRW_RTN";
+            this.btnBRW_RTN.Size = new System.Drawing.Size(200, 48);
+            this.btnBRW_RTN.TabIndex = 1;
+            this.btnBRW_RTN.Text = "Borrows";
+            this.btnBRW_RTN.UseVisualStyleBackColor = false;
+            this.btnBRW_RTN.Click += new System.EventHandler(this.btnBRW_RTN_Click);
+            // 
+            // btnBook
+            // 
+            this.btnBook.BackColor = System.Drawing.Color.DarkGray;
+            this.btnBook.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnBook.FlatAppearance.BorderSize = 0;
+            this.btnBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBook.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnBook.Image = global::LMS.Properties.Resources.book_48px;
+            this.btnBook.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBook.Location = new System.Drawing.Point(0, 115);
+            this.btnBook.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBook.Name = "btnBook";
+            this.btnBook.Size = new System.Drawing.Size(200, 48);
+            this.btnBook.TabIndex = 0;
+            this.btnBook.Text = "Books";
+            this.btnBook.UseVisualStyleBackColor = false;
+            this.btnBook.Click += new System.EventHandler(this.btnBook_Click);
+            // 
+            // btnHome
+            // 
+            this.btnHome.BackColor = System.Drawing.Color.DarkGray;
+            this.btnHome.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnHome.FlatAppearance.BorderSize = 0;
+            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnHome.Image = global::LMS.Properties.Resources.home_48px;
+            this.btnHome.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnHome.Location = new System.Drawing.Point(0, 67);
+            this.btnHome.Margin = new System.Windows.Forms.Padding(0);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(200, 48);
+            this.btnHome.TabIndex = 2;
+            this.btnHome.Text = "Home";
+            this.btnHome.UseVisualStyleBackColor = false;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // LMS_FORM
             // 

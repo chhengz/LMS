@@ -164,8 +164,11 @@ namespace LMS
             txtAvailableQuantity.Clear();
             dobCreatedAt.Value = DateTime.Now;
             row_selected = -1; // Reset selected row index
-            btnSave.Text = "Add New Book";
+            btnSave.Text = "Add New";
+
+
             btnSave.Enabled = true;
+            btnEdit.Enabled = false;
             btnDelete.Enabled = false;
         }
 
@@ -203,8 +206,11 @@ namespace LMS
                 dobCreatedAt.Value = row.Cells["CreatedAt"].Value != null && row.Cells["CreatedAt"].Value != DBNull.Value
                     ? Convert.ToDateTime(row.Cells["CreatedAt"].Value)
                     : DateTime.Now;
+
+
                 btnSave.Enabled = false;
-                btnEdit.Text = "Update Book";
+                btnEdit.Enabled = true;
+                btnDelete.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -212,6 +218,10 @@ namespace LMS
             }
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

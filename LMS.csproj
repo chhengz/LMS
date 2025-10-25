@@ -115,6 +115,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -131,6 +132,36 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="_db\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\menu\book_48px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\menu\home_48px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\menu\borrow_book_48px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\menu\user_48px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\icon\add_30px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\icon\edit_file_30px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\icon\delete_bin_30px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\icon\search_30px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\icon\broom_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\icon\ok_30px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

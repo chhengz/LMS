@@ -41,7 +41,7 @@ namespace LMS
             };
 
             txtTID.Enabled = false;
-            lblStaffName.Text = currentStaff.FullName;
+            lblStaffName.Text = $"Staff: {currentStaff.FullName}, Role: {currentStaff.Role}";
         }
 
         private void LoadBooks()
@@ -135,7 +135,11 @@ namespace LMS
                 cbBook.SelectedValue = selectedRow.Cells["BookID"].Value;
 
                 string status = selectedRow.Cells["Status"].Value.ToString();
-                btnReturn.Enabled = status == "Borrowed"; // Enable return button only if status is "Borrowed"
+                //btnReturn.Enabled = status == "Borrowed";
+
+
+                btnBorrow.Enabled = false;
+                btnReturn.Enabled = true;
 
                 //dtpDueDate.Value = Convert.ToDateTime(selectedRow.Cells["DueDate"].Value);
             }
@@ -178,10 +182,7 @@ namespace LMS
             }
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
+        
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
@@ -216,9 +217,16 @@ namespace LMS
             txtBorrowerContact.Clear();
             cbBook.SelectedIndex = -1;
             dtpBorrowDate.Value = DateTime.Now;
-            btnBorrow.Text = "Add New Borrower";
+            //btnBorrow.Text = "Add New Borrower";
+
+            btnBorrow.Enabled = true;
             btnReturn.Enabled = false;
             //dtpBorrowDate.Value = DateTime.Now;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
         }
 
 
