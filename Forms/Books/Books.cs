@@ -24,23 +24,14 @@ namespace LMS.Forms.Books
     }
 
 
-
-
-
     public static class Books
     {
-       
-
-
-
-
         // ===== Books =====
         public static List<Book> GetBooks()
         {
             var list = new List<Book>();
             try
             {
-               
                 using (var conn = Connection.GetConn())
                 using (var cmd = new SqlCommand("sp_GetBooks", conn))
                 {
@@ -52,8 +43,8 @@ namespace LMS.Forms.Books
                         {
                             var b = new Book
                             {
-                                BookID = r.GetInt32(r.GetOrdinal("BookID")),
                                 ISBN = r.GetString(r.GetOrdinal("ISBN")),
+                                BookID = r.GetInt32(r.GetOrdinal("BookID")),
                                 Title = r.GetString(r.GetOrdinal("Title")),
                                 Author = r.IsDBNull(r.GetOrdinal("Author")) ? null : r.GetString(r.GetOrdinal("Author")),
                                 Publisher = r.IsDBNull(r.GetOrdinal("Publisher")) ? null : r.GetString(r.GetOrdinal("Publisher")),
@@ -66,17 +57,16 @@ namespace LMS.Forms.Books
                             list.Add(b);
                         }
                     }
+                    conn.Close();
                 }
             }
             catch (Exception ex)
             {
-                // Log the error (e.g., to a file, console, or event log)
                 Console.WriteLine($"Error fetching books: {ex.Message}");
-                throw; // Rethrow the exception or handle it as needed
+                throw;
             }
             return list;
         }
-
 
 
         public static void AddBook(Book b)
@@ -92,7 +82,7 @@ namespace LMS.Forms.Books
                 cmd.Parameters.AddWithValue("@PublishedYear", (object)b.PublishedYear ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Category", (object)b.Category ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Quantity", b.Quantity);
-                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
 
@@ -109,7 +99,7 @@ namespace LMS.Forms.Books
                 cmd.Parameters.AddWithValue("@PublishedYear", (object)b.PublishedYear ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Category", (object)b.Category ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Quantity", b.Quantity);
-                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
 
@@ -120,20 +110,8 @@ namespace LMS.Forms.Books
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@BookID", bookId);
-                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

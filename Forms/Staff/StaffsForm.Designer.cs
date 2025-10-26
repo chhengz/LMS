@@ -38,6 +38,9 @@
             this.txtSID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.r1 = new System.Windows.Forms.Button();
+            this.r2 = new System.Windows.Forms.Button();
+            this.txtRole = new System.Windows.Forms.TextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.chPass = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -48,9 +51,6 @@
             this.dgvStaff = new System.Windows.Forms.DataGridView();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.dobCreatedAt = new System.Windows.Forms.DateTimePicker();
-            this.txtRole = new System.Windows.Forms.TextBox();
-            this.r1 = new System.Windows.Forms.Button();
-            this.r2 = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -159,6 +159,34 @@
             this.panel2.Size = new System.Drawing.Size(683, 56);
             this.panel2.TabIndex = 23;
             // 
+            // r1
+            // 
+            this.r1.Location = new System.Drawing.Point(618, 19);
+            this.r1.Name = "r1";
+            this.r1.Size = new System.Drawing.Size(28, 28);
+            this.r1.TabIndex = 30;
+            this.r1.Text = "1";
+            this.r1.UseVisualStyleBackColor = true;
+            this.r1.Click += new System.EventHandler(this.r1_Click);
+            // 
+            // r2
+            // 
+            this.r2.Location = new System.Drawing.Point(649, 19);
+            this.r2.Name = "r2";
+            this.r2.Size = new System.Drawing.Size(28, 28);
+            this.r2.TabIndex = 31;
+            this.r2.Text = "2";
+            this.r2.UseVisualStyleBackColor = true;
+            this.r2.Click += new System.EventHandler(this.r2_Click);
+            // 
+            // txtRole
+            // 
+            this.txtRole.Location = new System.Drawing.Point(453, 19);
+            this.txtRole.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.txtRole.Name = "txtRole";
+            this.txtRole.Size = new System.Drawing.Size(159, 28);
+            this.txtRole.TabIndex = 31;
+            // 
             // txtPass
             // 
             this.txtPass.Location = new System.Drawing.Point(229, 19);
@@ -226,11 +254,11 @@
             // dgvStaff
             // 
             this.dgvStaff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStaff.Location = new System.Drawing.Point(12, 254);
+            this.dgvStaff.Location = new System.Drawing.Point(0, 254);
             this.dgvStaff.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.dgvStaff.Name = "dgvStaff";
             this.dgvStaff.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStaff.Size = new System.Drawing.Size(820, 212);
+            this.dgvStaff.Size = new System.Drawing.Size(844, 220);
             this.dgvStaff.TabIndex = 25;
             this.dgvStaff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStaff_CellClick);
             // 
@@ -249,34 +277,6 @@
             this.dobCreatedAt.Name = "dobCreatedAt";
             this.dobCreatedAt.Size = new System.Drawing.Size(120, 28);
             this.dobCreatedAt.TabIndex = 28;
-            // 
-            // txtRole
-            // 
-            this.txtRole.Location = new System.Drawing.Point(453, 19);
-            this.txtRole.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.txtRole.Name = "txtRole";
-            this.txtRole.Size = new System.Drawing.Size(159, 28);
-            this.txtRole.TabIndex = 31;
-            // 
-            // r1
-            // 
-            this.r1.Location = new System.Drawing.Point(618, 19);
-            this.r1.Name = "r1";
-            this.r1.Size = new System.Drawing.Size(28, 28);
-            this.r1.TabIndex = 30;
-            this.r1.Text = "1";
-            this.r1.UseVisualStyleBackColor = true;
-            this.r1.Click += new System.EventHandler(this.r1_Click);
-            // 
-            // r2
-            // 
-            this.r2.Location = new System.Drawing.Point(649, 19);
-            this.r2.Name = "r2";
-            this.r2.Size = new System.Drawing.Size(28, 28);
-            this.r2.TabIndex = 31;
-            this.r2.Text = "2";
-            this.r2.UseVisualStyleBackColor = true;
-            this.r2.Click += new System.EventHandler(this.r2_Click);
             // 
             // btnClear
             // 

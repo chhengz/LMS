@@ -52,11 +52,11 @@
             // dgvBorrower
             // 
             this.dgvBorrower.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBorrower.Location = new System.Drawing.Point(9, 215);
+            this.dgvBorrower.Location = new System.Drawing.Point(0, 215);
             this.dgvBorrower.Margin = new System.Windows.Forms.Padding(4);
             this.dgvBorrower.Name = "dgvBorrower";
             this.dgvBorrower.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBorrower.Size = new System.Drawing.Size(822, 252);
+            this.dgvBorrower.Size = new System.Drawing.Size(844, 260);
             this.dgvBorrower.TabIndex = 1;
             this.dgvBorrower.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBorrower_CellClick);
             // 

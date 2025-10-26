@@ -62,7 +62,6 @@ namespace LMS
             using (var conn = Connection.GetConn())
             {
                 await conn.OpenAsync();
-
                 string query = "SELECT TOP 1 StaffID, FullName, Role, username, password FROM Staff WHERE username = @user AND CAST(password AS VARCHAR(MAX)) = @pass;";
                 using (var cmd = new SqlCommand(query, conn))
                 {
@@ -85,41 +84,9 @@ namespace LMS
                     }
                 }
             }
+            return null;
+        }
 
-                return null;
-            }
-
-
-
-
-        //public static List<Staff> GetStaffAccont()
-        //{
-        //    var list = new List<Staff>();
-        //    using (var conn = Connection.GetConn())
-        //    using (var cmd = new SqlCommand("sp_GetStaffAccount", conn))
-        //    {
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        conn.Open();
-
-        //        using (var r = cmd.ExecuteReader())
-        //        {
-        //            while (r.Read())
-        //            {
-        //                var s = new Staff
-        //                {
-        //                    Username = r["Username"].ToString(),
-        //                    Password = r["Password"].ToString(),
-        //                    FullName = r["FullName"].ToString(),
-        //                    Role = r["Role"].ToString()
-        //                };
-
-        //                list.Add(s);
-        //            }
-        //        }
-        //    }
-
-        //    return list;
-        //}
 
         public static void AddStaff(Staff s)
         {
@@ -133,11 +100,9 @@ namespace LMS
                 cmd.Parameters.AddWithValue("@U", (object)s.Username ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@P", (object)s.Password ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Role", (object)s.Role ?? DBNull.Value);
-
-                // cmd.Parameters.AddWithValue("@CreatedAt", s.CreatedAt);
-
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                conn.Close();
             }
         }
 
@@ -155,7 +120,7 @@ namespace LMS
                 cmd.Parameters.AddWithValue("@U", (object)s.Username ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@P", (object)s.Password ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Role", (object)s.Role ?? DBNull.Value);
-                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
 
@@ -166,15 +131,9 @@ namespace LMS
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@StaffID", staffId);
-                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
-
-
-
-
-
-
 
     }
 }

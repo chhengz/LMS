@@ -12,7 +12,6 @@ namespace LMS.Forms.BorrowReturn
     {
         public int TransactionID { get; set; }
         public int BookID { get; set; }
-        public string BookTitle { get; set; }   // Added for display
         public string BorrowerName { get; set; }
         public string BorrowerContact { get; set; }
         public DateTime BorrowDate { get; set; }
@@ -20,16 +19,14 @@ namespace LMS.Forms.BorrowReturn
         public DateTime? ReturnDate { get; set; }
         public string Status { get; set; }
         public int StaffID { get; set; }
+
+        public string BookTitle { get; set; }   // Added for display
         public string StaffName { get; set; }   // Added for display
     }
 
 
-
-
-
     public static class Borrowers
     {
-
         public static List<BorrowReturn> GetBorrowRecords()
         {
             var list = new List<BorrowReturn>();
@@ -57,6 +54,7 @@ namespace LMS.Forms.BorrowReturn
                         list.Add(s);
                     }
                 }
+                conn.Close();
             }
             return list;
         }
@@ -74,7 +72,7 @@ namespace LMS.Forms.BorrowReturn
                 cmd.Parameters.AddWithValue("@BorrowerContact", (object)borrowerContact ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@DueDate", dueDate);
                 cmd.Parameters.AddWithValue("@StaffID", staffId);
-                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
 
@@ -85,7 +83,7 @@ namespace LMS.Forms.BorrowReturn
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@TransactionID", transactionId);
-                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
 
@@ -96,7 +94,7 @@ namespace LMS.Forms.BorrowReturn
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@TransactionID", transactionId);
-                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
 

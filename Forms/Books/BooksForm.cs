@@ -5,43 +5,30 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
-
 namespace LMS
 {
     public partial class BooksForm : Form
     {
         private Staff loggedInStaff;
         private int row_selected = -1;
-
         public BooksForm(Staff staff)
         {
             InitializeComponent();
             loggedInStaff = staff;
             LoadBooks();
 
-
-            txtISBN.Enabled = false;
-            txtAvailableQuantity.Enabled = false; // Disable Available Quantity textbox for manual editing
-
-            if (loggedInStaff.Role != "Admin")
-            {
-                btnDelete.Enabled = false; // Disable delete button for non-admin users
-            }
+            txtAvailableQuantity.Enabled = false; 
+            btnSave.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
         }
 
-
-        // handle LoadBook to show book data on datagrid view
         private void LoadBooks()
         {
             try
             {
-                // call static class of Connection that have members GetBooks()
                 var books = Books.GetBooks(); 
-
-                // store books data in dgvBooks (DataGridView for Books)
                 dgvBooks.DataSource = books;
-       
-                // call configuration to setup style for datagridview
                 ConfigureDataGridView();
             }
             catch (Exception ex)
@@ -50,14 +37,10 @@ namespace LMS
             }
         }
 
-       
-
         // cconfiguration for datagrid veiw
         private void ConfigureDataGridView()
         {
-            // Optional: Customize column headers and visibility
-            dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Automatically generate columns based on Book properties
-
+            dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             if (dgvBooks.Columns.Count > 0)
             {
 
@@ -71,7 +54,6 @@ namespace LMS
                 if (dgvBooks.Columns["Quantity"] != null) dgvBooks.Columns["Quantity"].HeaderText = "Total Quantity";
                 if (dgvBooks.Columns["AvailableQuantity"] != null) dgvBooks.Columns["AvailableQuantity"].HeaderText = "Available Quantity";
                 if (dgvBooks.Columns["CreatedAt"] != null) dgvBooks.Columns["CreatedAt"].HeaderText = "Created At";
-                
                 // if (dgvBooks.Columns["CreatedAt"] != null) dgvBooks.Columns["CreatedAt"].Visible = false;
             }
             dgvBooks.AllowUserToAddRows = false;
@@ -108,7 +90,6 @@ namespace LMS
                         Title = string.IsNullOrWhiteSpace(txtTitle.Text) ? null : txtTitle.Text,
                         Author = string.IsNullOrWhiteSpace(txtAuthor.Text) ? null : txtAuthor.Text,
                         Publisher = string.IsNullOrWhiteSpace(txtPublisher.Text) ? null : txtPublisher.Text,
-                        //PublishedYear = int.TryParse(numYear.Value.ToString(), out int year) ? (int?)year : null,
                         PublishedYear = int.TryParse(numYear.Text, out int year) ? (int?)year : 0,
                         Category = string.IsNullOrWhiteSpace(txtCategory.Text) ? null : txtCategory.Text,
                         Quantity = int.TryParse(numQty.Text, out int qty) ? qty : 0,
@@ -117,7 +98,7 @@ namespace LMS
                     };
                     Books.AddBook(newBook);
                     MessageBox.Show("Book added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadBooks(); // Refresh the book list
+                    LoadBooks(); 
                 } else
                 {
                     MessageBox.Show("ISBN is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -126,6 +107,10 @@ namespace LMS
             catch (Exception ex)
             {
                 MessageBox.Show($"Error saving book: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                ClearForm();
             }
         }
 
@@ -143,16 +128,50 @@ namespace LMS
             {
                 MessageBox.Show($"Error saving book: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                ClearForm();
+            }
         }
-
 
         // btn edit/update book (UPDATE)
         private void btnEdit_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (row_selected < 0) return; // No row selected
+                var updatedBook = new Book
+                {
+                    ISBN = string.IsNullOrWhiteSpace(txtISBN.Text) ? null : txtISBN.Text,
+                    Title = string.IsNullOrWhiteSpace(txtTitle.Text) ? null : txtTitle.Text,
+                    Author = string.IsNullOrWhiteSpace(txtAuthor.Text) ? null : txtAuthor.Text,
+                    Publisher = string.IsNullOrWhiteSpace(txtPublisher.Text) ? null : txtPublisher.Text,
+                    PublishedYear = int.TryParse(numYear.Text, out int year) ? (int?)year : 0,
+                    Category = string.IsNullOrWhiteSpace(txtCategory.Text) ? null : txtCategory.Text,
+                    Quantity = int.TryParse(numQty.Text, out int qty) ? qty : 0,
+                    AvailableQuantity = int.TryParse(txtAvailableQuantity.Text, out int availQty) ? availQty : 0,
+                    CreatedAt = Convert.ToDateTime(dobCreatedAt.Value),
+                };
+                Books.UpdateBook(updatedBook);
+                MessageBox.Show("Book updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadBooks(); // Refresh the book list
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating book: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                ClearForm();
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
+
+        private void ClearForm()
         {
             txtISBN.Clear();
             txtTitle.Clear();
@@ -163,13 +182,10 @@ namespace LMS
             numQty.Clear();
             txtAvailableQuantity.Clear();
             dobCreatedAt.Value = DateTime.Now;
-            row_selected = -1; // Reset selected row index
-            btnSave.Text = "Add New";
-
-            txtISBN.Enabled = true;
+            row_selected = -1;
             btnSave.Enabled = true;
             btnEdit.Enabled = false;
-            btnDelete.Enabled = false;
+            btnDelete.Enabled = loggedInStaff.Role == "Admin";
         }
 
         private void dgvBooks_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -193,7 +209,7 @@ namespace LMS
                     MessageBox.Show("This row is empty.");
                     return;
                 }
-                // Safe to proceed
+
                 txtISBN.Text = row.Cells["ISBN"].Value?.ToString() ?? "";
                 txtTitle.Text = row.Cells["Title"].Value?.ToString() ?? "";
                 txtAuthor.Text = row.Cells["Author"].Value?.ToString() ?? "";
@@ -202,15 +218,13 @@ namespace LMS
                 txtCategory.Text = row.Cells["Category"].Value?.ToString() ?? "";
                 numQty.Text = row.Cells["Quantity"].Value?.ToString() ?? "";
                 txtAvailableQuantity.Text = row.Cells["AvailableQuantity"].Value?.ToString() ?? "";
-                //dobCreatedAt.Value = Convert.ToDateTime(row.Cells["CreatedAt"].Value);
                 dobCreatedAt.Value = row.Cells["CreatedAt"].Value != null && row.Cells["CreatedAt"].Value != DBNull.Value
                     ? Convert.ToDateTime(row.Cells["CreatedAt"].Value)
                     : DateTime.Now;
 
-
                 btnSave.Enabled = false;
                 btnEdit.Enabled = true;
-                btnDelete.Enabled = true;
+                btnDelete.Enabled = loggedInStaff.Role == "Admin";
             }
             catch (Exception ex)
             {
@@ -218,21 +232,12 @@ namespace LMS
             }
         }
 
+
+        // handle searchbox to search with ID and Name
         private void btnSearch_Click(object sender, EventArgs e)
         {
 
         }
+
     }
-
-
-
-
-
-
-
-        // handle searchbox to search with ID and Name
-
-
-
-
 }

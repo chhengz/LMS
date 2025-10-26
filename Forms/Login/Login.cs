@@ -14,6 +14,7 @@ namespace LMS
             InitializeComponent();
             this.AcceptButton = btnLogin;
             txtPassword.UseSystemPasswordChar = true;
+            //this.Text = "LMS - Login";
 
             // Optimize layout rendering
             this.SuspendLayout();
@@ -87,8 +88,7 @@ namespace LMS
         private void btnClose_Click(object sender, EventArgs e)
         {
             var re = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (re == DialogResult.Yes)
-                Application.Exit();
+            if (re == DialogResult.Yes) Application.Exit();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)

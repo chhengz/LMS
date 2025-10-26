@@ -71,9 +71,8 @@ namespace LMS
 
         private void LMS_FORM_Load(object sender, EventArgs e)
         {
-            this.Text = $"{APP_NAME_SHORT} - ID:{loggedInStaff.StaffID}|Name:{loggedInStaff.FullName}|Role: {loggedInStaff.Role} - {DateTime.Now.ToString()}";
-            //this.Tag = $"Library Management System";
-            //lblWelcome.Text = $"{loggedInStaff.FullName} [{loggedInStaff.Role}]";
+            this.Tag = $"Library Management System";
+            this.Text = $"{APP_NAME_SHORT} - [ID: {loggedInStaff.StaffID} | Name: {loggedInStaff.FullName} | Role: {loggedInStaff.Role}] - {DateTime.Now.ToString()}";
 
             btnHome_Click(btnHome, EventArgs.Empty);
         }

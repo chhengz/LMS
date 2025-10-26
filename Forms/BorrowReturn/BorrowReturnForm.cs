@@ -57,7 +57,6 @@ namespace LMS
                 cbBook.ValueMember = "BookID";
             }
         }
-
       
 
         // handle LoadBook to show book data on datagrid view
@@ -91,9 +90,7 @@ namespace LMS
 
         private void ConfigureDataGridView()
         {
-            // Set AutoSizeColumnsMode to Fill to make columns fill the DataGridView width
             dgvBorrower.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            // Optionally, you can set specific column widths if needed
             if (dgvBorrower.Columns.Count > 0)
             {
                 dgvBorrower.Columns["TransactionID"].Visible = false;
@@ -106,7 +103,7 @@ namespace LMS
                 dgvBorrower.Columns["StaffName"].HeaderText = "Handled By";
                 dgvBorrower.Columns["Status"].HeaderText = "Status";
             }
-            // Set other properties for better appearance
+
             dgvBorrower.AllowUserToAddRows = false;
             dgvBorrower.AllowUserToDeleteRows = false;
             dgvBorrower.ReadOnly = true;
@@ -133,15 +130,9 @@ namespace LMS
                     cbBook.SelectedIndex = index;
                 }
                 cbBook.SelectedValue = selectedRow.Cells["BookID"].Value;
-
                 string status = selectedRow.Cells["Status"].Value.ToString();
-                //btnReturn.Enabled = status == "Borrowed";
-
-
                 btnBorrow.Enabled = false;
                 btnReturn.Enabled = true;
-
-                //dtpDueDate.Value = Convert.ToDateTime(selectedRow.Cells["DueDate"].Value);
             }
             catch (Exception ex)
             {
@@ -200,12 +191,9 @@ namespace LMS
             {
                 int transactionId = Convert.ToInt32(txtTID.Text);
                 Borrowers.ReturnBook(transactionId);
-
                 MessageBox.Show("Book returned successfully ✅");
-
                 LoadBorrower();
                 ClearForm();
-
             }
         }
 
@@ -217,28 +205,14 @@ namespace LMS
             txtBorrowerContact.Clear();
             cbBook.SelectedIndex = -1;
             dtpBorrowDate.Value = DateTime.Now;
-            //btnBorrow.Text = "Add New Borrower";
 
             btnBorrow.Enabled = true;
             btnReturn.Enabled = false;
-            //dtpBorrowDate.Value = DateTime.Now;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearForm();
         }
-
-
-
-        //private void btnBorrow_Click(object sender, EventArgs e)
-        //{
-
-        //}
-
-        //private void btnReturn_Click(object sender, EventArgs e)
-        //{
-
-        //}
     }
 }
