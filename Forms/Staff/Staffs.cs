@@ -13,20 +13,18 @@ namespace LMS
         public int StaffID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Role { get; set; }
         public DateTime CreatedAt { get; set; }
-
         //public Staff() { }
     }
 
 
     public static class Staffs
     {
-        // ===== Staff =====
+        // ===================== GET ALL STAFF =====================
         public static List<Staff> GetStaff()
         {
             var list = new List<Staff>();
@@ -56,7 +54,7 @@ namespace LMS
             return list;
         }
 
-        // Get staff by username and password for login
+        // ===================== LOGIN STAFF =====================
         public static async Task<Staff> GetStaffByLoginAsync(string username, string password)
         {
             using (var conn = Connection.GetConn())
@@ -87,7 +85,7 @@ namespace LMS
             return null;
         }
 
-
+        // ===================== ADD NEW STAFF =====================
         public static void AddStaff(Staff s)
         {
             using (var conn = Connection.GetConn())
@@ -100,13 +98,11 @@ namespace LMS
                 cmd.Parameters.AddWithValue("@U", (object)s.Username ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@P", (object)s.Password ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Role", (object)s.Role ?? DBNull.Value);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
+                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
 
-
+        // ===================== UPDATE =====================
         public static void UpdateStaff(Staff s)
         {
             using (var conn = Connection.GetConn())
@@ -124,6 +120,7 @@ namespace LMS
             }
         }
 
+        // ===================== DELETE =====================
         public static void DeleteStaff(int staffId)
         {
             using (var conn = Connection.GetConn())

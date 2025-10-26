@@ -67,7 +67,7 @@
             this.txtEmail.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(218, 28);
-            this.txtEmail.TabIndex = 16;
+            this.txtEmail.TabIndex = 2;
             // 
             // txtFN
             // 
@@ -75,7 +75,7 @@
             this.txtFN.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtFN.Name = "txtFN";
             this.txtFN.Size = new System.Drawing.Size(216, 28);
-            this.txtFN.TabIndex = 15;
+            this.txtFN.TabIndex = 1;
             // 
             // label3
             // 
@@ -116,7 +116,7 @@
             this.txtPhone.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(218, 28);
-            this.txtPhone.TabIndex = 21;
+            this.txtPhone.TabIndex = 3;
             // 
             // label9
             // 
@@ -132,8 +132,9 @@
             this.txtSID.Location = new System.Drawing.Point(8, 19);
             this.txtSID.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtSID.Name = "txtSID";
+            this.txtSID.ReadOnly = true;
             this.txtSID.Size = new System.Drawing.Size(132, 28);
-            this.txtSID.TabIndex = 23;
+            this.txtSID.TabIndex = 0;
             // 
             // label1
             // 
@@ -164,7 +165,7 @@
             this.r1.Location = new System.Drawing.Point(618, 19);
             this.r1.Name = "r1";
             this.r1.Size = new System.Drawing.Size(28, 28);
-            this.r1.TabIndex = 30;
+            this.r1.TabIndex = 6;
             this.r1.Text = "1";
             this.r1.UseVisualStyleBackColor = true;
             this.r1.Click += new System.EventHandler(this.r1_Click);
@@ -174,7 +175,7 @@
             this.r2.Location = new System.Drawing.Point(649, 19);
             this.r2.Name = "r2";
             this.r2.Size = new System.Drawing.Size(28, 28);
-            this.r2.TabIndex = 31;
+            this.r2.TabIndex = 7;
             this.r2.Text = "2";
             this.r2.UseVisualStyleBackColor = true;
             this.r2.Click += new System.EventHandler(this.r2_Click);
@@ -184,8 +185,9 @@
             this.txtRole.Location = new System.Drawing.Point(453, 19);
             this.txtRole.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtRole.Name = "txtRole";
+            this.txtRole.ReadOnly = true;
             this.txtRole.Size = new System.Drawing.Size(159, 28);
-            this.txtRole.TabIndex = 31;
+            this.txtRole.TabIndex = 0;
             // 
             // txtPass
             // 
@@ -193,7 +195,7 @@
             this.txtPass.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtPass.Name = "txtPass";
             this.txtPass.Size = new System.Drawing.Size(218, 28);
-            this.txtPass.TabIndex = 16;
+            this.txtPass.TabIndex = 5;
             // 
             // chPass
             // 
@@ -229,7 +231,7 @@
             this.txtUser.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(216, 28);
-            this.txtUser.TabIndex = 15;
+            this.txtUser.TabIndex = 4;
             // 
             // label7
             // 
@@ -254,47 +256,47 @@
             // dgvStaff
             // 
             this.dgvStaff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStaff.Location = new System.Drawing.Point(0, 254);
+            this.dgvStaff.Location = new System.Drawing.Point(0, 240);
             this.dgvStaff.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.dgvStaff.Name = "dgvStaff";
             this.dgvStaff.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStaff.Size = new System.Drawing.Size(844, 220);
-            this.dgvStaff.TabIndex = 25;
+            this.dgvStaff.Size = new System.Drawing.Size(844, 238);
+            this.dgvStaff.TabIndex = 14;
             this.dgvStaff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStaff_CellClick);
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(562, 215);
+            this.txtSearch.Location = new System.Drawing.Point(562, 204);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(230, 28);
-            this.txtSearch.TabIndex = 26;
+            this.txtSearch.TabIndex = 12;
             // 
             // dobCreatedAt
             // 
             this.dobCreatedAt.CustomFormat = "dd-MM-yyyy";
             this.dobCreatedAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dobCreatedAt.Location = new System.Drawing.Point(702, 13);
+            this.dobCreatedAt.Location = new System.Drawing.Point(702, 12);
             this.dobCreatedAt.Name = "dobCreatedAt";
             this.dobCreatedAt.Size = new System.Drawing.Size(120, 28);
-            this.dobCreatedAt.TabIndex = 28;
+            this.dobCreatedAt.TabIndex = 0;
             // 
             // btnClear
             // 
             this.btnClear.Image = global::LMS.Properties.Resources.broom_32px;
-            this.btnClear.Location = new System.Drawing.Point(273, 212);
+            this.btnClear.Location = new System.Drawing.Point(338, 199);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(34, 34);
-            this.btnClear.TabIndex = 29;
+            this.btnClear.TabIndex = 11;
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnSearch
             // 
             this.btnSearch.Image = global::LMS.Properties.Resources.search_30px;
-            this.btnSearch.Location = new System.Drawing.Point(798, 212);
+            this.btnSearch.Location = new System.Drawing.Point(798, 199);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(34, 34);
-            this.btnSearch.TabIndex = 27;
+            this.btnSearch.TabIndex = 13;
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
@@ -302,10 +304,10 @@
             // 
             this.btnDelete.Image = global::LMS.Properties.Resources.delete_bin_30px;
             this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDelete.Location = new System.Drawing.Point(186, 212);
+            this.btnDelete.Location = new System.Drawing.Point(232, 199);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(81, 34);
-            this.btnDelete.TabIndex = 14;
+            this.btnDelete.Size = new System.Drawing.Size(100, 34);
+            this.btnDelete.TabIndex = 10;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -315,11 +317,11 @@
             // 
             this.btnEdit.Image = global::LMS.Properties.Resources.edit_file_30px;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(99, 212);
+            this.btnEdit.Location = new System.Drawing.Point(126, 199);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(81, 34);
-            this.btnEdit.TabIndex = 13;
-            this.btnEdit.Text = "Edit";
+            this.btnEdit.Size = new System.Drawing.Size(100, 34);
+            this.btnEdit.TabIndex = 9;
+            this.btnEdit.Text = "Update";
             this.btnEdit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
@@ -328,10 +330,10 @@
             // 
             this.btnSave.Image = global::LMS.Properties.Resources.add_30px;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(12, 212);
+            this.btnSave.Location = new System.Drawing.Point(20, 199);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(81, 34);
-            this.btnSave.TabIndex = 12;
+            this.btnSave.Size = new System.Drawing.Size(100, 34);
+            this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Save";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = true;

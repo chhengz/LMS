@@ -12,13 +12,10 @@ namespace LMS
         public Login_form()
         {
             InitializeComponent();
-            this.AcceptButton = btnLogin;
-            txtPassword.UseSystemPasswordChar = true;
-            //this.Text = "LMS - Login";
-
-            // Optimize layout rendering
             this.SuspendLayout();
+            this.AcceptButton = btnLogin;
 
+            txtPassword.UseSystemPasswordChar = true;
             cbxShowPass.CheckedChanged += (s, e) =>
             {
                 txtPassword.UseSystemPasswordChar = !cbxShowPass.Checked;
@@ -33,6 +30,8 @@ namespace LMS
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
+
+        // ===================== LOGIN BUTTON =====================
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             string user = txtUsername.Text.Trim();
@@ -78,6 +77,7 @@ namespace LMS
             }
         }
 
+        // ===================== Clear Fields BUTTON =====================
         public void ClearForm()
         {
             txtUsername.Clear();
@@ -85,12 +85,14 @@ namespace LMS
             txtUsername.Focus();
         }
 
+        // ===================== CLOSE BUTTON =====================
         private void btnClose_Click(object sender, EventArgs e)
         {
             var re = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (re == DialogResult.Yes) Application.Exit();
         }
 
+        // ===================== MOVE WINDOW =====================
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();

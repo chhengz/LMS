@@ -14,13 +14,15 @@ namespace LMS
         public BooksForm(Staff staff)
         {
             InitializeComponent();
+            this.SuspendLayout();
             loggedInStaff = staff;
-            LoadBooks();
 
-            txtAvailableQuantity.Enabled = false; 
+            LoadBooks();
             btnSave.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            //txtAvailableQuantity.Enabled = false;
+            this.ResumeLayout();
         }
 
         private void LoadBooks()
@@ -37,7 +39,6 @@ namespace LMS
             }
         }
 
-        // cconfiguration for datagrid veiw
         private void ConfigureDataGridView()
         {
             dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -56,15 +57,13 @@ namespace LMS
                 if (dgvBooks.Columns["CreatedAt"] != null) dgvBooks.Columns["CreatedAt"].HeaderText = "Created At";
                 // if (dgvBooks.Columns["CreatedAt"] != null) dgvBooks.Columns["CreatedAt"].Visible = false;
             }
+            dgvBooks.ReadOnly = true;
+            dgvBooks.MultiSelect = false;
             dgvBooks.AllowUserToAddRows = false;
             dgvBooks.AllowUserToDeleteRows = false;
-            dgvBooks.ReadOnly = true;
             dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBooks.MultiSelect = false;
         }
 
-
-        // handle OnChange to update data when database change 
         public void OnChange(object caller, SqlNotificationEventArgs e)
         {
             if (this.InvokeRequired)
@@ -77,7 +76,7 @@ namespace LMS
             }
         }
 
-        // btn save book (one by one) into the database (INSERT) 
+        // ===================== SAVE BUTTON =====================
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
@@ -114,7 +113,7 @@ namespace LMS
             }
         }
 
-        // btn Delete book from database
+        // ===================== DELETE BUTTON =====================
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
@@ -134,7 +133,7 @@ namespace LMS
             }
         }
 
-        // btn edit/update book (UPDATE)
+        // ===================== UPDATE BUTTON =====================
         private void btnEdit_Click(object sender, EventArgs e)
         {
             try
@@ -171,23 +170,8 @@ namespace LMS
             ClearForm();
         }
 
-        private void ClearForm()
-        {
-            txtISBN.Clear();
-            txtTitle.Clear();
-            txtAuthor.Clear();
-            txtPublisher.Clear();
-            numYear.Clear();
-            txtCategory.Clear();
-            numQty.Clear();
-            txtAvailableQuantity.Clear();
-            dobCreatedAt.Value = DateTime.Now;
-            row_selected = -1;
-            btnSave.Enabled = true;
-            btnEdit.Enabled = false;
-            btnDelete.Enabled = loggedInStaff.Role == "Admin";
-        }
 
+        // ===================== GRID CLICK =====================
         private void dgvBooks_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             row_selected = e.RowIndex;
@@ -233,11 +217,34 @@ namespace LMS
         }
 
 
-        // handle searchbox to search with ID and Name
+        // ===================== SEARCH BUTTON =====================
         private void btnSearch_Click(object sender, EventArgs e)
         {
 
         }
+
+
+        // ===================== CLEAR FIELDS =====================
+        private void ClearForm()
+        {
+            numQty.Clear();
+            txtISBN.Clear();
+            numYear.Clear();
+            txtTitle.Clear();
+            txtAuthor.Clear();
+            txtCategory.Clear();
+            txtPublisher.Clear();
+            txtAvailableQuantity.Clear();
+            dobCreatedAt.Value = DateTime.Now;
+            row_selected = -1;
+            btnSave.Enabled = true;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            //btnDelete.Enabled = loggedInStaff.Role == "Admin";
+        }
+
+
+
 
     }
 }

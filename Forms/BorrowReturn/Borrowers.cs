@@ -27,6 +27,7 @@ namespace LMS.Forms.BorrowReturn
 
     public static class Borrowers
     {
+        // ===================== GET ALL BORROWERS =====================
         public static List<BorrowReturn> GetBorrowRecords()
         {
             var list = new List<BorrowReturn>();
@@ -60,7 +61,7 @@ namespace LMS.Forms.BorrowReturn
         }
 
 
-        // ===== Borrow & Return (calls SP that manages transaction) =====
+        // ===================== BORROW BOOK =====================
         public static void BorrowBook(int bookId, string borrowerName, string borrowerContact, DateTime dueDate, int staffId)
         {
             using (var conn = Connection.GetConn())
@@ -76,6 +77,7 @@ namespace LMS.Forms.BorrowReturn
             }
         }
 
+        // ===================== RETURN BOOK =====================
         public static void ReturnBook(int transactionId)
         {
             using (var conn = Connection.GetConn())
@@ -87,6 +89,7 @@ namespace LMS.Forms.BorrowReturn
             }
         }
 
+        // ===================== REMOVE =====================
         public static void RemoveBorrowRecord(int transactionId)
         {
             using (var conn = Connection.GetConn())
@@ -97,7 +100,5 @@ namespace LMS.Forms.BorrowReturn
                 conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
-
-
     }
 }

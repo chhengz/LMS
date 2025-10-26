@@ -49,36 +49,38 @@
             this.numYear = new System.Windows.Forms.TextBox();
             this.txtCategory = new System.Windows.Forms.TextBox();
             this.dobCreatedAt = new System.Windows.Forms.DateTimePicker();
-            this.label9 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvBooks
             // 
             this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBooks.Location = new System.Drawing.Point(0, 226);
+            this.dgvBooks.Location = new System.Drawing.Point(0, 205);
             this.dgvBooks.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.dgvBooks.Name = "dgvBooks";
             this.dgvBooks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBooks.Size = new System.Drawing.Size(844, 250);
-            this.dgvBooks.TabIndex = 0;
+            this.dgvBooks.Size = new System.Drawing.Size(844, 271);
+            this.dgvBooks.TabIndex = 16;
             this.dgvBooks.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBooks_CellClick);
             // 
             // txtISBN
             // 
-            this.txtISBN.Location = new System.Drawing.Point(16, 28);
+            this.txtISBN.Location = new System.Drawing.Point(6, 19);
             this.txtISBN.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtISBN.Name = "txtISBN";
             this.txtISBN.Size = new System.Drawing.Size(157, 28);
-            this.txtISBN.TabIndex = 1;
+            this.txtISBN.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 19);
             this.label1.TabIndex = 2;
@@ -87,7 +89,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 61);
+            this.label2.Location = new System.Drawing.Point(165, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(33, 19);
             this.label2.TabIndex = 3;
@@ -96,7 +98,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(344, 61);
+            this.label3.Location = new System.Drawing.Point(550, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 19);
             this.label3.TabIndex = 4;
@@ -105,7 +107,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 113);
+            this.label4.Location = new System.Drawing.Point(2, 52);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 19);
             this.label4.TabIndex = 5;
@@ -114,7 +116,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(181, 113);
+            this.label5.Location = new System.Drawing.Point(165, 52);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 19);
             this.label5.TabIndex = 6;
@@ -123,7 +125,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(570, 59);
+            this.label6.Location = new System.Drawing.Point(552, 50);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(60, 19);
             this.label6.TabIndex = 7;
@@ -132,7 +134,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(344, 113);
+            this.label7.Location = new System.Drawing.Point(328, 52);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(59, 19);
             this.label7.TabIndex = 8;
@@ -140,36 +142,36 @@
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(16, 80);
+            this.txtTitle.Location = new System.Drawing.Point(169, 19);
             this.txtTitle.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(326, 28);
-            this.txtTitle.TabIndex = 2;
+            this.txtTitle.Size = new System.Drawing.Size(379, 28);
+            this.txtTitle.TabIndex = 3;
             // 
             // txtPublisher
             // 
-            this.txtPublisher.Location = new System.Drawing.Point(16, 132);
+            this.txtPublisher.Location = new System.Drawing.Point(6, 71);
             this.txtPublisher.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtPublisher.Name = "txtPublisher";
             this.txtPublisher.Size = new System.Drawing.Size(157, 28);
-            this.txtPublisher.TabIndex = 4;
+            this.txtPublisher.TabIndex = 5;
             // 
             // txtAuthor
             // 
-            this.txtAuthor.Location = new System.Drawing.Point(348, 80);
+            this.txtAuthor.Location = new System.Drawing.Point(554, 19);
             this.txtAuthor.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtAuthor.Name = "txtAuthor";
-            this.txtAuthor.Size = new System.Drawing.Size(218, 28);
-            this.txtAuthor.TabIndex = 3;
+            this.txtAuthor.Size = new System.Drawing.Size(256, 28);
+            this.txtAuthor.TabIndex = 4;
             // 
             // btnEdit
             // 
             this.btnEdit.Image = global::LMS.Properties.Resources.edit_file_30px;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(122, 185);
+            this.btnEdit.Location = new System.Drawing.Point(124, 164);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(99, 34);
-            this.btnEdit.TabIndex = 10;
+            this.btnEdit.TabIndex = 11;
             this.btnEdit.Text = "Update";
             this.btnEdit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -179,10 +181,10 @@
             // 
             this.btnDelete.Image = global::LMS.Properties.Resources.delete_bin_30px;
             this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDelete.Location = new System.Drawing.Point(227, 185);
+            this.btnDelete.Location = new System.Drawing.Point(229, 164);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(99, 34);
-            this.btnDelete.TabIndex = 11;
+            this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -190,22 +192,23 @@
             // 
             // numQty
             // 
-            this.numQty.Location = new System.Drawing.Point(348, 132);
+            this.numQty.Location = new System.Drawing.Point(332, 71);
             this.numQty.Name = "numQty";
             this.numQty.Size = new System.Drawing.Size(104, 28);
             this.numQty.TabIndex = 7;
             // 
             // txtAvailableQuantity
             // 
-            this.txtAvailableQuantity.Location = new System.Drawing.Point(458, 132);
+            this.txtAvailableQuantity.Location = new System.Drawing.Point(442, 71);
             this.txtAvailableQuantity.Name = "txtAvailableQuantity";
+            this.txtAvailableQuantity.ReadOnly = true;
             this.txtAvailableQuantity.Size = new System.Drawing.Size(106, 28);
-            this.txtAvailableQuantity.TabIndex = 8;
+            this.txtAvailableQuantity.TabIndex = 0;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(454, 113);
+            this.label8.Location = new System.Drawing.Point(438, 52);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(62, 19);
             this.label8.TabIndex = 20;
@@ -213,51 +216,42 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(560, 190);
+            this.txtSearch.Location = new System.Drawing.Point(564, 168);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(230, 28);
-            this.txtSearch.TabIndex = 12;
+            this.txtSearch.TabIndex = 14;
             // 
             // numYear
             // 
-            this.numYear.Location = new System.Drawing.Point(185, 132);
+            this.numYear.Location = new System.Drawing.Point(169, 71);
             this.numYear.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.numYear.Name = "numYear";
             this.numYear.Size = new System.Drawing.Size(157, 28);
-            this.numYear.TabIndex = 5;
+            this.numYear.TabIndex = 6;
             // 
             // txtCategory
             // 
-            this.txtCategory.Location = new System.Drawing.Point(572, 80);
+            this.txtCategory.Location = new System.Drawing.Point(554, 71);
             this.txtCategory.Name = "txtCategory";
-            this.txtCategory.Size = new System.Drawing.Size(218, 28);
-            this.txtCategory.TabIndex = 6;
+            this.txtCategory.Size = new System.Drawing.Size(256, 28);
+            this.txtCategory.TabIndex = 9;
             // 
             // dobCreatedAt
             // 
             this.dobCreatedAt.CustomFormat = "dd-MM-yyyy";
             this.dobCreatedAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dobCreatedAt.Location = new System.Drawing.Point(700, 9);
+            this.dobCreatedAt.Location = new System.Drawing.Point(702, 12);
             this.dobCreatedAt.Name = "dobCreatedAt";
-            this.dobCreatedAt.Size = new System.Drawing.Size(132, 28);
-            this.dobCreatedAt.TabIndex = 21;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(614, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(80, 19);
-            this.label9.TabIndex = 22;
-            this.label9.Text = "Choose Date";
+            this.dobCreatedAt.Size = new System.Drawing.Size(120, 28);
+            this.dobCreatedAt.TabIndex = 1;
             // 
             // btnClear
             // 
             this.btnClear.Image = global::LMS.Properties.Resources.broom_32px;
-            this.btnClear.Location = new System.Drawing.Point(348, 185);
+            this.btnClear.Location = new System.Drawing.Point(334, 164);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(34, 34);
-            this.btnClear.TabIndex = 30;
+            this.btnClear.TabIndex = 13;
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -265,10 +259,10 @@
             // 
             this.btnSave.Image = global::LMS.Properties.Resources.add_30px;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(16, 185);
+            this.btnSave.Location = new System.Drawing.Point(18, 164);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 34);
-            this.btnSave.TabIndex = 9;
+            this.btnSave.TabIndex = 10;
             this.btnSave.Text = "Add New";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = true;
@@ -277,42 +271,60 @@
             // btnSearch
             // 
             this.btnSearch.Image = global::LMS.Properties.Resources.search_30px;
-            this.btnSearch.Location = new System.Drawing.Point(796, 185);
+            this.btnSearch.Location = new System.Drawing.Point(800, 164);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(34, 34);
-            this.btnSearch.TabIndex = 31;
+            this.btnSearch.TabIndex = 15;
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Khmer OS Battambang", 12F);
+            this.label9.Location = new System.Drawing.Point(8, 12);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(139, 29);
+            this.label9.TabIndex = 44;
+            this.label9.Text = "Book\'s Infomation";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.txtISBN);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.txtTitle);
+            this.panel1.Controls.Add(this.txtCategory);
+            this.panel1.Controls.Add(this.txtAuthor);
+            this.panel1.Controls.Add(this.numYear);
+            this.panel1.Controls.Add(this.txtPublisher);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.txtAvailableQuantity);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.numQty);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Location = new System.Drawing.Point(12, 46);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(822, 112);
+            this.panel1.TabIndex = 45;
             // 
             // BooksForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 480);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.label9);
             this.Controls.Add(this.dobCreatedAt);
-            this.Controls.Add(this.txtCategory);
-            this.Controls.Add(this.numYear);
             this.Controls.Add(this.txtSearch);
-            this.Controls.Add(this.txtAvailableQuantity);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.numQty);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtPublisher);
-            this.Controls.Add(this.txtAuthor);
-            this.Controls.Add(this.txtTitle);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtISBN);
             this.Controls.Add(this.dgvBooks);
             this.Font = new System.Drawing.Font("Khmer OS Battambang", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -320,6 +332,8 @@
             this.Name = "BooksForm";
             this.Text = "Books Form";
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -349,8 +363,9 @@
         private System.Windows.Forms.TextBox numYear;
         private System.Windows.Forms.TextBox txtCategory;
         private System.Windows.Forms.DateTimePicker dobCreatedAt;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel1;
     }
 }

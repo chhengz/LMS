@@ -14,17 +14,15 @@ namespace LMS
         public BorrowReturnForm(Staff staff)
         {
             InitializeComponent();
-            // Optimize layout rendering
             this.SuspendLayout();
             currentStaff = staff;
 
-            LoadBorrower();
             LoadBooks();
+            LoadBorrower();
 
+            txtTID.Enabled = false;
             btnReturn.Enabled = false;
             txtStatus.Enabled = false;
-
-            //txtStatus.Enabled = false;
 
             txtBorrowerContact.Enabled = false;
             cbx_contact_check.CheckedChanged += (s, e) =>
@@ -40,8 +38,8 @@ namespace LMS
                 }
             };
 
-            txtTID.Enabled = false;
             lblStaffName.Text = $"Staff: {currentStaff.FullName}, Role: {currentStaff.Role}";
+            this.ResumeLayout();
         }
 
         private void LoadBooks()

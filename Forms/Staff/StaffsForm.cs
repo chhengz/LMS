@@ -19,46 +19,18 @@ namespace LMS
         public StaffsForm(Staff staff)
         {
             InitializeComponent();
+            this.SuspendLayout();
             loggedInStaff = staff;
 
-            //MessageBox.Show($"Logged in as: {loggedInStaff.StaffID} | {loggedInStaff.Username} ({loggedInStaff.Role})", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Optimize layout rendering
-            this.SuspendLayout();
-
-            txtPass.UseSystemPasswordChar = true;
-            txtSID.Enabled = false;
-            txtRole.Enabled = false;
-
             LoadStaffs();
-            //LoadRoles();
-
-            if (loggedInStaff.Role != "Admin")
-            {
-                btnDelete.Enabled = false;
-                btnEdit.Enabled = false;
-                btnSave.Enabled = false;
-            }
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
 
             // Handle show password checkbox
-            //txtPass.Enabled = false;
-            chPass.CheckedChanged += (s, e) =>
-            {
-                txtPass.UseSystemPasswordChar = !chPass.Checked;
-                //txtPass.Enabled = chPass.Checked;
-            };
-
+            txtPass.UseSystemPasswordChar = true;
+            chPass.CheckedChanged += (s, e) => txtPass.UseSystemPasswordChar = !chPass.Checked;
             this.ResumeLayout();
         }
-
-        // ===================== LOAD METHODS =====================
-        //private void LoadRoles()
-        //{
-        //    // Define available roles (you can modify these)
-        //    var roles = new List<string> { "Admin", "Librarian", "Assistant", "Staff" };
-        //    cbRole.DataSource = roles;
-        //    cbRole.SelectedIndex = -1;
-        //}
 
         private void LoadStaffs()
         {
@@ -85,22 +57,19 @@ namespace LMS
                 if (dgvStaff.Columns["Email"] != null) dgvStaff.Columns["Email"].HeaderText = "Email";
                 if (dgvStaff.Columns["Phone"] != null) dgvStaff.Columns["Phone"].HeaderText = "Phone";
                 if (dgvStaff.Columns["Username"] != null) dgvStaff.Columns["Username"].HeaderText = "Username";
-
-                if (dgvStaff.Columns["Password"] != null)
-                {
-                    dgvStaff.Columns["Password"].HeaderText = "Password";
-                    dgvStaff.Columns["Password"].Visible = false;
-                }
-
+                //if (dgvStaff.Columns["Password"] != null)
+                //{
+                //    dgvStaff.Columns["Password"].HeaderText = "Password";
+                //    dgvStaff.Columns["Password"].Visible = false;
+                //}
                 if (dgvStaff.Columns["Role"] != null) dgvStaff.Columns["Role"].HeaderText = "Role";
                 if (dgvStaff.Columns["CreatedAt"] != null) dgvStaff.Columns["CreatedAt"].HeaderText = "Created At";
             }
-
+            dgvStaff.ReadOnly = true;
+            dgvStaff.MultiSelect = false;
             dgvStaff.AllowUserToAddRows = false;
             dgvStaff.AllowUserToDeleteRows = false;
-            dgvStaff.ReadOnly = true;
             dgvStaff.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvStaff.MultiSelect = false;
         }
 
         // ===================== GRID CLICK =====================
@@ -113,24 +82,19 @@ namespace LMS
 
                 DataGridViewRow row = dgvStaff.Rows[row_selected];
                 if (row == null || row.Cells["StaffID"].Value == null) return;
-
                 txtSID.Text = row.Cells["StaffID"].Value?.ToString() ?? "";
                 txtFN.Text = row.Cells["FullName"].Value?.ToString() ?? "";
                 txtEmail.Text = row.Cells["Email"].Value?.ToString() ?? "";
                 txtPhone.Text = row.Cells["Phone"].Value?.ToString() ?? "";
                 txtUser.Text = row.Cells["Username"].Value?.ToString() ?? "";
                 txtPass.Text = row.Cells["Password"].Value?.ToString() ?? "";
-
-                //cbRole.SelectedItem = row.Cells["Role"].Value?.ToString();
                 txtRole.Text = row.Cells["Role"].Value?.ToString() ?? "";
 
                 dobCreatedAt.Value = row.Cells["CreatedAt"].Value != null && row.Cells["CreatedAt"].Value != DBNull.Value
                     ? Convert.ToDateTime(row.Cells["CreatedAt"].Value)
                     : DateTime.Now;
-
                 btnSave.Enabled = false;
                 btnEdit.Enabled = true;
-                //btnDelete.Enabled = loggedInStaff.Role == "Admin";
                 btnDelete.Enabled = true;
                 txtPass.Enabled = true;
                 lbSAcc.Text = "Staff Account";
@@ -141,7 +105,7 @@ namespace LMS
             }
         }
 
-        // ===================== BUTTON EVENTS =====================
+        // ===================== SAVE BUTTON =====================
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
@@ -155,7 +119,6 @@ namespace LMS
                         Phone = txtPhone.Text,
                         Username = txtUser.Text,
                         Password = txtPass.Text,
-                        //Role = cbRole.SelectedItem.ToString(),
                         Role = txtRole.Text,
                         //CreatedAt = dobCreatedAt.Value
                     };
@@ -179,6 +142,19 @@ namespace LMS
             }
         }
 
+
+        // ===================== ROLE CHECK BUTTON =====================
+        private void r1_Click(object sender, EventArgs e)
+        {
+            txtRole.Text = "Admin";
+        }
+
+        private void r2_Click(object sender, EventArgs e)
+        {
+            txtRole.Text = "Librarian";
+        }
+
+        // ===================== UPDATE BUTTON =====================
         private void btnEdit_Click(object sender, EventArgs e)
         {
             try
@@ -197,7 +173,6 @@ namespace LMS
                     Phone = txtPhone.Text,
                     Username = txtUser.Text,
                     Password = txtPass.Text,
-                    //Role = cbRole.SelectedItem?.ToString() ?? "",
                     Role = txtRole.Text,
                     //CreatedAt = dobCreatedAt.Value
                 };
@@ -217,14 +192,13 @@ namespace LMS
             }
         }
 
+        // ===================== DELETE BUTTON =====================
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
                 if (dgvStaff.SelectedRows.Count == 0) return;
-
                 int staff_id = Convert.ToInt32(dgvStaff.SelectedRows[0].Cells["StaffID"].Value);
-
                 var confirm = MessageBox.Show("Are you sure you want to delete this staff?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.Yes)
                 {
@@ -242,26 +216,18 @@ namespace LMS
             }
         }
 
+        // ===================== SEARCH BUTTON =====================
         private void btnSearch_Click(object sender, EventArgs e)
         {
             try
             {
                 string keyword = txtSearch.Text.Trim();
-
                 if (string.IsNullOrEmpty(keyword))
                 {
                     LoadStaffs();
                     return;
                 }
-
                 var staffs = Staffs.GetStaff();
-                //var filtered = staffs
-                //    .Where(s =>
-                //        s.FullName.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
-                //        s.Email.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
-                //        s.Username.Contains(keyword, StringComparison.OrdinalIgnoreCase))
-                //    .ToList();
-
                 var filtered = staffs
                     .Where(s =>
                         (!string.IsNullOrEmpty(s.FullName) && s.FullName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||
@@ -282,7 +248,7 @@ namespace LMS
             ClearFields();
         }
 
-        // ===================== HELPERS =====================
+        // ===================== CLEAR FIELDS =====================
         private void ClearFields()
         {
             txtSID.Clear();
@@ -291,26 +257,11 @@ namespace LMS
             txtPhone.Clear();
             txtUser.Clear();
             txtPass.Clear();
-            //cbRole.SelectedIndex = -1;
             txtRole.Clear();
-
-            lbSAcc.Text = "Make Staff Account";
-
             btnSave.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
-            //btnDelete.Enabled = loggedInStaff.Role == "Admin";
-        }
-
-        // =============== ROLE BUTTON CHECK ===============
-        private void r1_Click(object sender, EventArgs e)
-        {
-            txtRole.Text = "Admin";
-        }
-
-        private void r2_Click(object sender, EventArgs e)
-        {
-            txtRole.Text = "Librarian";
+            lbSAcc.Text = "Make Staff Account";
         }
     }
 }
