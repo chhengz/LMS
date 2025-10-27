@@ -204,6 +204,7 @@ namespace LMS
             cbBook.SelectedIndex = -1;
             dtpBorrowDate.Value = DateTime.Now;
 
+            txtSearch.Text = string.Empty;
             btnBorrow.Enabled = true;
             btnReturn.Enabled = false;
         }
@@ -211,6 +212,41 @@ namespace LMS
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearForm();
+            ClearSearchData();
+        }
+
+        private void ClearSearchData()
+        {
+            txtSearch.Text = string.Empty;
+            LoadBorrower();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string keyword = txtSearch.Text.Trim().ToLower();
+                if (string.IsNullOrEmpty(keyword))
+                {
+                    LoadBorrower();
+                    return;
+                }
+
+                var borrowers = Borrowers.GetBorrowRecords();
+                var filtered = borrowers.FindAll(b =>
+                    b.BorrowerName.ToLower().Contains(keyword) ||
+                    b.BookTitle.ToLower().Contains(keyword) ||
+                    b.Status.ToLower().Contains(keyword)
+                );
+
+                dgvBorrower.DataSource = filtered;
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error searching staffs: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

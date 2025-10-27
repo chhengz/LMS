@@ -57,7 +57,7 @@ namespace LMS.Forms.Books
                             list.Add(b);
                         }
                     }
-                    conn.Close();
+                    //conn.Close();
                 }
             }
             catch (Exception ex)
@@ -82,7 +82,8 @@ namespace LMS.Forms.Books
                 cmd.Parameters.AddWithValue("@PublishedYear", (object)b.PublishedYear ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Category", (object)b.Category ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Quantity", b.Quantity);
-                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
+                conn.Open(); cmd.ExecuteNonQuery(); 
+                //conn.Close();
             }
         }
 
@@ -97,9 +98,10 @@ namespace LMS.Forms.Books
                 cmd.Parameters.AddWithValue("@Author", (object)b.Author ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Publisher", (object)b.Publisher ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@PublishedYear", (object)b.PublishedYear ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@Category", (object)b.Category ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Category", b.Category);
                 cmd.Parameters.AddWithValue("@Quantity", b.Quantity);
-                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
+                conn.Open(); cmd.ExecuteNonQuery();
+                conn.Close();
             }
         }
 
@@ -110,7 +112,8 @@ namespace LMS.Forms.Books
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@BookID", bookId);
-                conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
+                conn.Open(); cmd.ExecuteNonQuery();
+                //conn.Close();
             }
         }
     }

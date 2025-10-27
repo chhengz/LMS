@@ -11,6 +11,7 @@ namespace LMS
     {
         private Staff loggedInStaff;
         private int row_selected = -1;
+        private int book_id;
         public BooksForm(Staff staff)
         {
             InitializeComponent();
@@ -81,7 +82,7 @@ namespace LMS
         {
             try
             {
-                if (txtISBN.Text != "" ) 
+                if ( txtISBN.Text != "" && txtTitle.Text != "" && txtAuthor.Text != "" && txtCategory.Text != "" && txtPublisher.Text != "" && numQty.Text != "") 
                 {
                     var newBook = new Book
                     {
@@ -100,7 +101,7 @@ namespace LMS
                     LoadBooks(); 
                 } else
                 {
-                    MessageBox.Show("ISBN is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("All fields are required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
@@ -119,8 +120,12 @@ namespace LMS
             try
             {
                 if (dgvBooks.SelectedRows.Count == 0) return;
-                int bookId = Convert.ToInt32(dgvBooks.SelectedRows[0].Cells["BookID"].Value);
-                Books.DeleteBook(bookId);
+                var re = MessageBox.Show("Are you sure you want to delete this book?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (re == DialogResult.Yes)
+                {
+                    int bookId = Convert.ToInt32(dgvBooks.SelectedRows[0].Cells["BookID"].Value);
+                    Books.DeleteBook(bookId);
+                }
                 LoadBooks();
             }
             catch (Exception ex)
@@ -141,6 +146,7 @@ namespace LMS
                 if (row_selected < 0) return; // No row selected
                 var updatedBook = new Book
                 {
+                    BookID = book_id,
                     ISBN = string.IsNullOrWhiteSpace(txtISBN.Text) ? null : txtISBN.Text,
                     Title = string.IsNullOrWhiteSpace(txtTitle.Text) ? null : txtTitle.Text,
                     Author = string.IsNullOrWhiteSpace(txtAuthor.Text) ? null : txtAuthor.Text,
@@ -151,6 +157,7 @@ namespace LMS
                     AvailableQuantity = int.TryParse(txtAvailableQuantity.Text, out int availQty) ? availQty : 0,
                     CreatedAt = Convert.ToDateTime(dobCreatedAt.Value),
                 };
+
                 Books.UpdateBook(updatedBook);
                 MessageBox.Show("Book updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadBooks(); // Refresh the book list
@@ -165,11 +172,7 @@ namespace LMS
             }
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
-
+       
 
         // ===================== GRID CLICK =====================
         private void dgvBooks_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -194,6 +197,7 @@ namespace LMS
                     return;
                 }
 
+                book_id = Convert.ToInt32(row.Cells["BookID"].Value);
                 txtISBN.Text = row.Cells["ISBN"].Value?.ToString() ?? "";
                 txtTitle.Text = row.Cells["Title"].Value?.ToString() ?? "";
                 txtAuthor.Text = row.Cells["Author"].Value?.ToString() ?? "";
@@ -220,9 +224,35 @@ namespace LMS
         // ===================== SEARCH BUTTON =====================
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string keyword = txtSearch.Text.Trim().ToLower();
+                if (string.IsNullOrEmpty(keyword))
+                {
+                    LoadBooks();
+                    return;
+                }
 
+                var books = Books.GetBooks();
+                var filteredBooks = books.FindAll(b => (b.Title != null && b.Title.ToLower().Contains(keyword)) ||
+                                                       (b.Author != null && b.Author.ToLower().Contains(keyword)) ||
+                                                       (b.ISBN != null && b.ISBN.ToLower().Contains(keyword)) ||
+                                                       (b.Category != null && b.Category.ToLower().Contains(keyword)) ||
+                                                       (b.Publisher != null && b.Publisher.ToLower().Contains(keyword)));
+
+                dgvBooks.DataSource = filteredBooks;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error searching books: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+            ClearSearchData();
+        }
 
         // ===================== CLEAR FIELDS =====================
         private void ClearForm()
@@ -240,11 +270,15 @@ namespace LMS
             btnSave.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
+            txtSearch.Text = string.Empty;
             //btnDelete.Enabled = loggedInStaff.Role == "Admin";
         }
 
-
-
-
+        private void ClearSearchData()
+        {
+            txtSearch.Text = string.Empty;
+            LoadBooks();
+        }
     }
+    
 }

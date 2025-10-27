@@ -33,7 +33,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBorrowerName = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.cbx_contact_check = new System.Windows.Forms.CheckBox();
             this.lblStaffName = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -98,12 +98,12 @@
             this.txtBorrowerName.Size = new System.Drawing.Size(254, 28);
             this.txtBorrowerName.TabIndex = 2;
             // 
-            // textBox2
+            // txtSearch
             // 
-            this.textBox2.Location = new System.Drawing.Point(564, 168);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(230, 28);
-            this.textBox2.TabIndex = 7;
+            this.txtSearch.Location = new System.Drawing.Point(564, 168);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(230, 28);
+            this.txtSearch.TabIndex = 7;
             // 
             // cbx_contact_check
             // 
@@ -184,6 +184,7 @@
             this.btnSearch.Size = new System.Drawing.Size(34, 34);
             this.btnSearch.TabIndex = 8;
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnClear
             // 
@@ -260,7 +261,7 @@
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.btnBorrow);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.dtpBorrowDate);
             this.Controls.Add(this.dgvBorrower);
             this.Font = new System.Drawing.Font("Khmer OS Battambang", 8.25F);
@@ -283,7 +284,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtBorrowerName;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.CheckBox cbx_contact_check;
         private System.Windows.Forms.Button btnReturn;
         private System.Windows.Forms.Button btnBorrow;

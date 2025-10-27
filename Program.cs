@@ -19,9 +19,9 @@ namespace LMS
 
             Staff loggedInStaff = new Staff
             {
-                StaffID = 2,
+                StaffID = 999,
                 FullName = "Admin",
-                Role = "Admin" // "Admin", "Librarian", "User", etc.
+                Role = "Admin" // "Admin", "Librarian"
             };
             //Application.Run(new LMS_FORM(loggedInStaff));
             Application.Run(new Login_form());

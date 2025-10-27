@@ -246,6 +246,7 @@ namespace LMS
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearFields();
+            ClearSearchData();
         }
 
         // ===================== CLEAR FIELDS =====================
@@ -262,6 +263,13 @@ namespace LMS
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             lbSAcc.Text = "Make Staff Account";
+            
+        }
+
+        private void ClearSearchData()
+        {
+            txtSearch.Text = string.Empty;
+            LoadStaffs();
         }
     }
 }
