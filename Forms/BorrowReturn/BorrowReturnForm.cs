@@ -9,62 +9,54 @@ namespace LMS
 {
     public partial class BorrowReturnForm : Form
     {
-        private Staff currentStaff;
-        private int lblBorrowID { set; get; }
+        private readonly Staff currentStaff;
+        private int selectedTransactionId;
+        
+
         public BorrowReturnForm(Staff staff)
         {
             InitializeComponent();
-            this.SuspendLayout();
             currentStaff = staff;
 
             LoadBooks();
-            LoadBorrower();
+            LoadBorrowers();
 
-            txtTID.Enabled = false;
-            btnReturn.Enabled = false;
-            txtStatus.Enabled = false;
-
-            txtBorrowerContact.Enabled = false;
-            cbx_contact_check.CheckedChanged += (s, e) =>
-            {
-                txtBorrowerContact.Enabled = !cbx_contact_check.Checked; // checked means enable textbox
-                if (cbx_contact_check.Checked)
-                {
-                    txtBorrowerContact.Enabled = true;
-                }
-                else
-                {
-                    txtBorrowerContact.Enabled = false;
-                }
-            };
+            SetupUI();
+            SetupEventHandlers();
 
             lblStaffName.Text = $"Staff: {currentStaff.FullName}, Role: {currentStaff.Role}";
-            this.ResumeLayout();
         }
 
-        private void LoadBooks()
+        // ===================== INITIAL SETUP =====================
+        private void SetupUI()
         {
-            using (var conn = Connection.GetConn())
-            using (var cmd = new SqlCommand("SELECT BookID, Title FROM Books WHERE AvailableQuantity > 0", conn))
-            {
-                conn.Open();
-                var dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                cbBook.DataSource = dt;
-                cbBook.DisplayMember = "Title";
-                cbBook.ValueMember = "BookID";
-            }
+            txtTID.Enabled = false;
+            txtStatus.Enabled = false;
+            txtBorrowerContact.Enabled = false;
+            btnReturn.Enabled = false;
         }
-      
 
-        // handle LoadBook to show book data on datagrid view
-        private void LoadBorrower()
+        private void SetupEventHandlers()
+        {
+            cbx_contact_check.CheckedChanged += (s, e) =>
+                txtBorrowerContact.Enabled = cbx_contact_check.Checked;
+        }
+
+        // ===================== LOAD BOOKS =====================
+        private void LoadBooks()
         {
             try
             {
-                var borrows = Borrowers.GetBorrowRecords();
-                dgvBorrower.DataSource = borrows;
-                ConfigureDataGridView();
+                using (var conn = Connection.GetConn())
+                using (var cmd = new SqlCommand("SELECT BookID, Title FROM Books WHERE AvailableQuantity > 0", conn))
+                {
+                    conn.Open();
+                    var dt = new DataTable();
+                    dt.Load(cmd.ExecuteReader());
+                    cbBook.DataSource = dt;
+                    cbBook.DisplayMember = "Title";
+                    cbBook.ValueMember = "BookID";
+                }
             }
             catch (Exception ex)
             {
@@ -72,94 +64,138 @@ namespace LMS
             }
         }
 
-        // handle OnChange to update or reload data when database change 
-        public void OnChange(object caller, SqlNotificationEventArgs e)
+        private void BorrowReturnForm_Load(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
-            {
-                dgvBorrower.BeginInvoke(new MethodInvoker(LoadBorrower));
-            }
-            else
-            {
-                LoadBorrower();
-            }
+            rbtnAll.Checked = true; // shows all borrowers on start
         }
 
-
-        private void ConfigureDataGridView()
-        {
-            dgvBorrower.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            if (dgvBorrower.Columns.Count > 0)
-            {
-                dgvBorrower.Columns["TransactionID"].Visible = false;
-                //dgvBorrower.Columns["BookID"].Visible = false;
-                dgvBorrower.Columns["BookTitle"].HeaderText = "Title";
-                dgvBorrower.Columns["BorrowerName"].HeaderText = "Borrower";
-                dgvBorrower.Columns["BorrowDate"].HeaderText = "BorrowDate";
-                dgvBorrower.Columns["DueDate"].HeaderText = "DueDate";
-                dgvBorrower.Columns["ReturnDate"].HeaderText = "ReturnDate";
-                dgvBorrower.Columns["StaffName"].HeaderText = "Handled By";
-                dgvBorrower.Columns["Status"].HeaderText = "Status";
-            }
-
-            dgvBorrower.AllowUserToAddRows = false;
-            dgvBorrower.AllowUserToDeleteRows = false;
-            dgvBorrower.ReadOnly = true;
-            dgvBorrower.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvBorrower.MultiSelect = false;
-        }
-        
-
-        private void dgvBorrower_CellClick(object sender, DataGridViewCellEventArgs e)
+        // ===================== LOAD BORROWERS =====================
+        private void LoadBorrowers(string status = null)
         {
             try
             {
-                if (e.RowIndex < 0 || e.RowIndex >= dgvBorrower.Rows.Count) return;
+                dgvBorrower.DataSource = Borrowers.GetBorrowRecords(status);
+                ConfigureDataGridView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading borrow records: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-                var selectedRow = dgvBorrower.Rows[e.RowIndex];
-                txtTID.Text = selectedRow.Cells["TransactionID"].Value.ToString();
-                txtBorrowerName.Text = selectedRow.Cells["BorrowerName"].Value.ToString();
-                dtpBorrowDate.Value = Convert.ToDateTime(selectedRow.Cells["BorrowDate"].Value);
-                txtStatus.Text = selectedRow.Cells["Status"].Value.ToString();
-                string selectedBookTitle = selectedRow.Cells["BookTitle"].Value.ToString();
-                int index = cbBook.FindStringExact(selectedBookTitle);
-                if (index >= 0)
-                {
-                    cbBook.SelectedIndex = index;
-                }
-                cbBook.SelectedValue = selectedRow.Cells["BookID"].Value;
-                string status = selectedRow.Cells["Status"].Value.ToString();
+        // ===================== SQL CHANGE HANDLER =====================
+        public void OnChange(object sender, SqlNotificationEventArgs e)
+        {
+            // Determine current filter based on which radio button is checked
+            string status = null;
+
+            if (rbtnBorrowed.Checked)
+                status = "Borrowed";
+            else if (rbtnReturned.Checked)
+                status = "Returned";
+            else if (rbtnAll.Checked)
+                status = null; // show all
+
+            // Refresh UI safely from the correct thread
+            if (InvokeRequired)
+                dgvBorrower.BeginInvoke(new MethodInvoker(() => LoadBorrowers(status)));
+            else
+                LoadBorrowers(status);
+
+
+            //string status = rbtnBorrowed.Checked ? "Borrowed" :
+            //                rbtnReturned.Checked ? "Returned" : null;
+
+            //if (InvokeRequired)
+            //    dgvBorrower.BeginInvoke(new MethodInvoker(() => LoadBorrowers(status)));
+            //else
+            //    LoadBorrowers(status);
+        }
+
+
+        // ===================== CONFIGURE GRID =====================
+        private void ConfigureDataGridView()
+        {
+            dgvBorrower.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvBorrower.ReadOnly = true;
+            dgvBorrower.MultiSelect = false;
+            dgvBorrower.AllowUserToAddRows = false;
+            dgvBorrower.AllowUserToDeleteRows = false;
+            dgvBorrower.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            if (dgvBorrower.Columns.Count == 0) return;
+
+            // Unified rename helper
+            Action<string, string> Rename = (col, header) =>
+            {
+                if (dgvBorrower.Columns[col] != null)
+                    dgvBorrower.Columns[col].HeaderText = header;
+            };
+
+            // Hide unnecessary columns
+            if (dgvBorrower.Columns["BookID"] != null) dgvBorrower.Columns["BookID"].Visible = false;
+            if (dgvBorrower.Columns["StaffID"] != null) dgvBorrower.Columns["StaffID"].Visible = false;
+            if (dgvBorrower.Columns["TransactionID"] != null) dgvBorrower.Columns["TransactionID"].Visible = false;
+
+            Rename("BookTitle", "Title");
+            Rename("BorrowerName", "Borrower");
+            Rename("BorrowDate", "Borrow Date");
+            Rename("DueDate", "Due Date");
+            Rename("ReturnDate", "Return Date");
+            Rename("StaffName", "Handled By");
+            Rename("Status", "Status");
+        }
+
+
+        // ===================== GRID CLICK =====================
+        private void dgvBorrower_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvBorrower.Rows.Count) return;
+
+            try
+            {
+                var row = dgvBorrower.Rows[e.RowIndex];
+
+                selectedTransactionId = Convert.ToInt32(row.Cells["TransactionID"].Value);
+                txtTID.Text = selectedTransactionId.ToString();
+                txtBorrowerName.Text = row.Cells["BorrowerName"].Value?.ToString() ?? "";
+                txtStatus.Text = row.Cells["Status"].Value?.ToString() ?? "";
+                dtpBorrowDate.Value = Convert.ToDateTime(row.Cells["BorrowDate"].Value);
+
+                string title = row.Cells["BookTitle"].Value?.ToString() ?? "";
+                int index = cbBook.FindStringExact(title);
+                if (index >= 0) cbBook.SelectedIndex = index;
+
                 btnBorrow.Enabled = false;
                 btnReturn.Enabled = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error selecting book: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error selecting record: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        // ===================== BORROW BUTTON =====================
         private void btnBorrow_Click(object sender, EventArgs e)
         {
             try
             {
                 if (cbBook.SelectedValue == null || string.IsNullOrWhiteSpace(txtBorrowerName.Text))
                 {
-                    MessageBox.Show("Please select a book and enter borrower name.");
+                    MessageBox.Show("Please select a book and enter the borrower name.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 int bookId = Convert.ToInt32(cbBook.SelectedValue);
                 string borrowerName = txtBorrowerName.Text.Trim();
                 string borrowerContact = txtBorrowerContact.Text.Trim();
-                DateTime dueDate = Convert.ToDateTime(dtpBorrowDate.Value);
+                DateTime dueDate = dtpBorrowDate.Value;
                 int staffId = currentStaff.StaffID;
 
-                //MessageBox.Show($"{bookId},{borrowerName},{borrowerContact},{dueDate},{staffId}");
-
                 Borrowers.BorrowBook(bookId, borrowerName, borrowerContact, dueDate, staffId);
+
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadBorrower(); // refresh grid
-                
+                LoadBorrowers();
             }
             catch (Exception ex)
             {
@@ -171,54 +207,58 @@ namespace LMS
             }
         }
 
-        
-
+        // ===================== RETURN BUTTON =====================
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(lblBorrowID.ToString()))
+            if (selectedTransactionId == 0)
             {
-                MessageBox.Show("Please select a record to return.");
+                MessageBox.Show("Please select a record to return.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            DialogResult confirm = MessageBox.Show(
+            var confirm = MessageBox.Show(
                 "Are you sure you want to mark this book as returned?",
                 "Confirm Return", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirm == DialogResult.Yes)
             {
-                int transactionId = Convert.ToInt32(txtTID.Text);
-                Borrowers.ReturnBook(transactionId);
-                MessageBox.Show("Book returned successfully ✅");
-                LoadBorrower();
-                ClearForm();
+                try
+                {
+                    Borrowers.ReturnBook(selectedTransactionId);
+                    MessageBox.Show("Book returned successfully ✅", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadBorrowers();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error returning book: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    ClearForm();
+                }
             }
+        }
+
+        // ===================== CLEAR / SEARCH =====================
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+            LoadBorrowers();
         }
 
         private void ClearForm()
         {
-            lblBorrowID = 0;
+            selectedTransactionId = 0;
             txtTID.Clear();
             txtBorrowerName.Clear();
             txtBorrowerContact.Clear();
+            txtStatus.Clear();
             cbBook.SelectedIndex = -1;
             dtpBorrowDate.Value = DateTime.Now;
+            txtSearch.Clear();
 
-            txtSearch.Text = string.Empty;
             btnBorrow.Enabled = true;
             btnReturn.Enabled = false;
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-            ClearSearchData();
-        }
-
-        private void ClearSearchData()
-        {
-            txtSearch.Text = string.Empty;
-            LoadBorrower();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -228,25 +268,42 @@ namespace LMS
                 string keyword = txtSearch.Text.Trim().ToLower();
                 if (string.IsNullOrEmpty(keyword))
                 {
-                    LoadBorrower();
+                    LoadBorrowers();
                     return;
                 }
 
                 var borrowers = Borrowers.GetBorrowRecords();
                 var filtered = borrowers.FindAll(b =>
-                    b.BorrowerName.ToLower().Contains(keyword) ||
-                    b.BookTitle.ToLower().Contains(keyword) ||
-                    b.Status.ToLower().Contains(keyword)
-                );
+                    (b.BorrowerName?.ToLower().Contains(keyword) ?? false) ||
+                    (b.BookTitle?.ToLower().Contains(keyword) ?? false) ||
+                    (b.Status?.ToLower().Contains(keyword) ?? false));
 
                 dgvBorrower.DataSource = filtered;
-
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error searching staffs: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error searching records: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void rbtnBorrowed_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnBorrowed.Checked)
+                LoadBorrowers("Borrowed");
+        }
+
+        private void rbtnReturned_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnReturned.Checked)
+                LoadBorrowers("Returned");
+        }
+
+        private void rbtnAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtnAll.Checked)
+                LoadBorrowers(); // NULL → show all
+        }
+
+        
     }
 }

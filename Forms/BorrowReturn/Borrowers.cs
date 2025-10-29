@@ -27,38 +27,42 @@ namespace LMS.Forms.BorrowReturn
 
     public static class Borrowers
     {
-        // ===================== GET ALL BORROWERS =====================
-        public static List<BorrowReturn> GetBorrowRecords()
+        // ===================== GET BORROW RECORDS (Filtered) =====================
+        public static List<BorrowReturn> GetBorrowRecords(string status = null)
         {
             var list = new List<BorrowReturn>();
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_GetBorrowRecords", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                conn.Open();
+                cmd.Parameters.AddWithValue("@Status", (object)status ?? DBNull.Value);
 
+                conn.Open();
                 using (var r = cmd.ExecuteReader())
                 {
                     while (r.Read())
                     {
-                        var s = new BorrowReturn
+                        var record = new BorrowReturn
                         {
                             TransactionID = r.GetInt32(r.GetOrdinal("TransactionID")),
                             BookTitle = r.GetString(r.GetOrdinal("BookTitle")),
                             BorrowerName = r.GetString(r.GetOrdinal("BorrowerName")),
                             BorrowDate = r.GetDateTime(r.GetOrdinal("BorrowDate")),
                             DueDate = r.GetDateTime(r.GetOrdinal("DueDate")),
-                            ReturnDate = r.IsDBNull(r.GetOrdinal("ReturnDate")) ? (DateTime?)null : r.GetDateTime(r.GetOrdinal("ReturnDate")),
+                            ReturnDate = r.IsDBNull(r.GetOrdinal("ReturnDate"))
+                                ? (DateTime?)null
+                                : r.GetDateTime(r.GetOrdinal("ReturnDate")),
                             Status = r.GetString(r.GetOrdinal("Status")),
                             StaffName = r.GetString(r.GetOrdinal("StaffName"))
                         };
-                        list.Add(s);
+                        list.Add(record);
                     }
                 }
-                conn.Close();
             }
             return list;
         }
+
+
 
 
         // ===================== BORROW BOOK =====================
@@ -77,6 +81,7 @@ namespace LMS.Forms.BorrowReturn
             }
         }
 
+
         // ===================== RETURN BOOK =====================
         public static void ReturnBook(int transactionId)
         {
@@ -88,6 +93,7 @@ namespace LMS.Forms.BorrowReturn
                 conn.Open(); cmd.ExecuteNonQuery(); conn.Close();
             }
         }
+
 
         // ===================== REMOVE =====================
         public static void RemoveBorrowRecord(int transactionId)

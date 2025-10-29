@@ -48,6 +48,9 @@
             this.btnBorrow = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbtnBorrowed = new System.Windows.Forms.RadioButton();
+            this.rbtnReturned = new System.Windows.Forms.RadioButton();
+            this.rbtnAll = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBorrower)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -250,12 +253,51 @@
             this.panel1.Size = new System.Drawing.Size(822, 112);
             this.panel1.TabIndex = 44;
             // 
+            // rbtnBorrowed
+            // 
+            this.rbtnBorrowed.AutoSize = true;
+            this.rbtnBorrowed.Location = new System.Drawing.Point(394, 173);
+            this.rbtnBorrowed.Name = "rbtnBorrowed";
+            this.rbtnBorrowed.Size = new System.Drawing.Size(80, 23);
+            this.rbtnBorrowed.TabIndex = 45;
+            this.rbtnBorrowed.TabStop = true;
+            this.rbtnBorrowed.Text = "Borrowed";
+            this.rbtnBorrowed.UseVisualStyleBackColor = true;
+            this.rbtnBorrowed.CheckedChanged += new System.EventHandler(this.rbtnBorrowed_CheckedChanged);
+            // 
+            // rbtnReturned
+            // 
+            this.rbtnReturned.AutoSize = true;
+            this.rbtnReturned.Location = new System.Drawing.Point(480, 173);
+            this.rbtnReturned.Name = "rbtnReturned";
+            this.rbtnReturned.Size = new System.Drawing.Size(78, 23);
+            this.rbtnReturned.TabIndex = 46;
+            this.rbtnReturned.TabStop = true;
+            this.rbtnReturned.Text = "Returned";
+            this.rbtnReturned.UseVisualStyleBackColor = true;
+            this.rbtnReturned.CheckedChanged += new System.EventHandler(this.rbtnReturned_CheckedChanged);
+            // 
+            // rbtnAll
+            // 
+            this.rbtnAll.AutoSize = true;
+            this.rbtnAll.Location = new System.Drawing.Point(346, 173);
+            this.rbtnAll.Name = "rbtnAll";
+            this.rbtnAll.Size = new System.Drawing.Size(42, 23);
+            this.rbtnAll.TabIndex = 47;
+            this.rbtnAll.TabStop = true;
+            this.rbtnAll.Text = "All";
+            this.rbtnAll.UseVisualStyleBackColor = true;
+            this.rbtnAll.CheckedChanged += new System.EventHandler(this.rbtnAll_CheckedChanged);
+            // 
             // BorrowReturnForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 480);
+            this.Controls.Add(this.rbtnAll);
+            this.Controls.Add(this.rbtnBorrowed);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.rbtnReturned);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnClear);
@@ -269,6 +311,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "BorrowReturnForm";
             this.Text = "Borrow/Return Form";
+            this.Load += new System.EventHandler(this.BorrowReturnForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBorrower)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -299,5 +342,8 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton rbtnBorrowed;
+        private System.Windows.Forms.RadioButton rbtnReturned;
+        private System.Windows.Forms.RadioButton rbtnAll;
     }
 }

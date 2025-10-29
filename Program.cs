@@ -16,7 +16,6 @@ namespace LMS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
             Staff loggedInStaff = new Staff
             {
                 StaffID = 999,

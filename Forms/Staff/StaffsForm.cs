@@ -1,87 +1,90 @@
 ﻿using LMS.Forms.Books;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LMS
 {
     public partial class StaffsForm : Form
     {
-        private Staff loggedInStaff;
+        private readonly Staff loggedInStaff;
         private int row_selected = -1;
 
         public StaffsForm(Staff staff)
         {
             InitializeComponent();
-            this.SuspendLayout();
-            loggedInStaff = staff;
+            loggedInStaff = staff ?? throw new ArgumentNullException(nameof(staff));
 
             LoadStaffs();
+
+            // Initialize button states
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
 
-            // Handle show password checkbox
+            // Show/Hide password toggle
             txtPass.UseSystemPasswordChar = true;
-            chPass.CheckedChanged += (s, e) => txtPass.UseSystemPasswordChar = !chPass.Checked;
-            this.ResumeLayout();
+            chPass.CheckedChanged += (s, e) =>
+                txtPass.UseSystemPasswordChar = !chPass.Checked;
         }
 
+        #region === Load & Configure Grid ===
         private void LoadStaffs()
         {
             try
             {
-                var staffs = Staffs.GetStaff();
-                dgvStaff.DataSource = staffs;
+                dgvStaff.DataSource = Staffs.GetStaff();
                 ConfigureDataGridView();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading staffs: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError("Error loading staffs", ex);
             }
         }
 
+        // ===================== CONFIGURE GRID =====================
         private void ConfigureDataGridView()
         {
             dgvStaff.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            if (dgvStaff.Columns.Count > 0)
-            {
-                if (dgvStaff.Columns["StaffID"] != null) dgvStaff.Columns["StaffID"].HeaderText = "Staff ID";
-                if (dgvStaff.Columns["FullName"] != null) dgvStaff.Columns["FullName"].HeaderText = "Full Name";
-                if (dgvStaff.Columns["Email"] != null) dgvStaff.Columns["Email"].HeaderText = "Email";
-                if (dgvStaff.Columns["Phone"] != null) dgvStaff.Columns["Phone"].HeaderText = "Phone";
-                if (dgvStaff.Columns["Username"] != null) dgvStaff.Columns["Username"].HeaderText = "Username";
-                //if (dgvStaff.Columns["Password"] != null)
-                //{
-                //    dgvStaff.Columns["Password"].HeaderText = "Password";
-                //    dgvStaff.Columns["Password"].Visible = false;
-                //}
-                if (dgvStaff.Columns["Role"] != null) dgvStaff.Columns["Role"].HeaderText = "Role";
-                if (dgvStaff.Columns["CreatedAt"] != null) dgvStaff.Columns["CreatedAt"].HeaderText = "Created At";
-            }
             dgvStaff.ReadOnly = true;
             dgvStaff.MultiSelect = false;
             dgvStaff.AllowUserToAddRows = false;
             dgvStaff.AllowUserToDeleteRows = false;
             dgvStaff.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            if (dgvStaff.Columns.Count == 0) return;
+
+            // Same inline rename helper for consistency
+            Action<string, string> Rename = (col, header) =>
+            {
+                if (dgvStaff.Columns[col] != null)
+                    dgvStaff.Columns[col].HeaderText = header;
+            };
+
+            Rename("StaffID", "Staff ID");
+            Rename("FullName", "Full Name");
+            Rename("Email", "Email");
+            Rename("Phone", "Phone");
+            Rename("Username", "Username");
+            Rename("Role", "Role");
+            Rename("CreatedAt", "Created At");
         }
 
-        // ===================== GRID CLICK =====================
+        #endregion
+
+        #region === Grid Row Selection ===
         private void dgvStaff_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             row_selected = e.RowIndex;
+            if (row_selected < 0) return; // Ignore header click
+
             try
             {
-                if (row_selected < 0) return; // header clicked
-
                 DataGridViewRow row = dgvStaff.Rows[row_selected];
                 if (row == null || row.Cells["StaffID"].Value == null) return;
+
                 txtSID.Text = row.Cells["StaffID"].Value?.ToString() ?? "";
                 txtFN.Text = row.Cells["FullName"].Value?.ToString() ?? "";
                 txtEmail.Text = row.Cells["Email"].Value?.ToString() ?? "";
@@ -90,9 +93,11 @@ namespace LMS
                 txtPass.Text = row.Cells["Password"].Value?.ToString() ?? "";
                 txtRole.Text = row.Cells["Role"].Value?.ToString() ?? "";
 
-                dobCreatedAt.Value = row.Cells["CreatedAt"].Value != null && row.Cells["CreatedAt"].Value != DBNull.Value
-                    ? Convert.ToDateTime(row.Cells["CreatedAt"].Value)
-                    : DateTime.Now;
+                if (row.Cells["CreatedAt"].Value != null && row.Cells["CreatedAt"].Value != DBNull.Value)
+                    dobCreatedAt.Value = Convert.ToDateTime(row.Cells["CreatedAt"].Value);
+                else
+                    dobCreatedAt.Value = DateTime.Now;
+
                 btnSave.Enabled = false;
                 btnEdit.Enabled = true;
                 btnDelete.Enabled = true;
@@ -101,40 +106,35 @@ namespace LMS
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error selecting staff: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError("Error selecting staff", ex);
             }
         }
+        #endregion
 
-        // ===================== SAVE BUTTON =====================
+        #region === Save / Update / Delete ===
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
             {
-                if (txtFN.Text != "" && txtEmail.Text != "" && txtUser.Text != "" && txtPass.Text != "" && txtRole.Text != "")
-                {
-                    var newStaff = new Staff
-                    {
-                        FullName = txtFN.Text,
-                        Email = txtEmail.Text,
-                        Phone = txtPhone.Text,
-                        Username = txtUser.Text,
-                        Password = txtPass.Text,
-                        Role = txtRole.Text,
-                        //CreatedAt = dobCreatedAt.Value
-                    };
+                if (!ValidateFields()) return;
 
-                    Staffs.AddStaff(newStaff);
-                    MessageBox.Show("Staff added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadStaffs();
-                }
-                else
+                var newStaff = new Staff
                 {
-                    MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                    FullName = txtFN.Text,
+                    Email = txtEmail.Text,
+                    Phone = txtPhone.Text,
+                    Username = txtUser.Text,
+                    Password = txtPass.Text,
+                    Role = txtRole.Text
+                };
+
+                Staffs.AddStaff(newStaff);
+                MessageBox.Show("Staff added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadStaffs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving staff: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError("Error saving staff", ex);
             }
             finally
             {
@@ -142,19 +142,6 @@ namespace LMS
             }
         }
 
-
-        // ===================== ROLE CHECK BUTTON =====================
-        private void r1_Click(object sender, EventArgs e)
-        {
-            txtRole.Text = "Admin";
-        }
-
-        private void r2_Click(object sender, EventArgs e)
-        {
-            txtRole.Text = "Librarian";
-        }
-
-        // ===================== UPDATE BUTTON =====================
         private void btnEdit_Click(object sender, EventArgs e)
         {
             try
@@ -173,18 +160,16 @@ namespace LMS
                     Phone = txtPhone.Text,
                     Username = txtUser.Text,
                     Password = txtPass.Text,
-                    Role = txtRole.Text,
-                    //CreatedAt = dobCreatedAt.Value
+                    Role = txtRole.Text
                 };
 
                 Staffs.UpdateStaff(updatedStaff);
-
                 MessageBox.Show("Staff updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadStaffs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error updating staff: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError("Error updating staff", ex);
             }
             finally
             {
@@ -192,54 +177,61 @@ namespace LMS
             }
         }
 
-        // ===================== DELETE BUTTON =====================
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
                 if (dgvStaff.SelectedRows.Count == 0) return;
-                int staff_id = Convert.ToInt32(dgvStaff.SelectedRows[0].Cells["StaffID"].Value);
-                var confirm = MessageBox.Show("Are you sure you want to delete this staff?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                int staffId = Convert.ToInt32(dgvStaff.SelectedRows[0].Cells["StaffID"].Value);
+                DialogResult confirm = MessageBox.Show(
+                    "Are you sure you want to delete this staff?",
+                    "Confirm Delete",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
                 if (confirm == DialogResult.Yes)
                 {
-                    Staffs.DeleteStaff(staff_id);
+                    Staffs.DeleteStaff(staffId);
                     LoadStaffs();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error deleting staff: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError("Error deleting staff", ex);
             }
             finally
             {
                 ClearFields();
             }
         }
+        #endregion
 
-        // ===================== SEARCH BUTTON =====================
+        #region === Search & Clear ===
         private void btnSearch_Click(object sender, EventArgs e)
         {
             try
             {
                 string keyword = txtSearch.Text.Trim();
+
                 if (string.IsNullOrEmpty(keyword))
                 {
                     LoadStaffs();
                     return;
                 }
+
                 var staffs = Staffs.GetStaff();
-                var filtered = staffs
-                    .Where(s =>
-                        (!string.IsNullOrEmpty(s.FullName) && s.FullName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                        (!string.IsNullOrEmpty(s.Email) && s.Email.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                        (!string.IsNullOrEmpty(s.Username) && s.Username.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0))
+                var filtered = staffs.Where(s =>
+                    (!string.IsNullOrEmpty(s.FullName) && s.FullName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (!string.IsNullOrEmpty(s.Email) && s.Email.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (!string.IsNullOrEmpty(s.Username) && s.Username.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0))
                     .ToList();
 
                 dgvStaff.DataSource = filtered;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error searching staff: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError("Error searching staff", ex);
             }
         }
 
@@ -249,7 +241,6 @@ namespace LMS
             ClearSearchData();
         }
 
-        // ===================== CLEAR FIELDS =====================
         private void ClearFields()
         {
             txtSID.Clear();
@@ -259,17 +250,42 @@ namespace LMS
             txtUser.Clear();
             txtPass.Clear();
             txtRole.Clear();
+
             btnSave.Enabled = true;
             btnEdit.Enabled = false;
             btnDelete.Enabled = false;
             lbSAcc.Text = "Make Staff Account";
-            
         }
 
         private void ClearSearchData()
         {
-            txtSearch.Text = string.Empty;
+            txtSearch.Clear();
             LoadStaffs();
         }
+        #endregion
+
+        #region === Helpers ===
+        private bool ValidateFields()
+        {
+            if (string.IsNullOrWhiteSpace(txtFN.Text) ||
+                string.IsNullOrWhiteSpace(txtEmail.Text) ||
+                string.IsNullOrWhiteSpace(txtUser.Text) ||
+                string.IsNullOrWhiteSpace(txtPass.Text) ||
+                string.IsNullOrWhiteSpace(txtRole.Text))
+            {
+                MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
+        private void ShowError(string message, Exception ex)
+        {
+            MessageBox.Show($"{message}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void r1_Click(object sender, EventArgs e) => txtRole.Text = "Admin";
+        private void r2_Click(object sender, EventArgs e) => txtRole.Text = "Librarian";
+        #endregion
     }
 }
