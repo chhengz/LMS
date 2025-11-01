@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace LMS.Forms.Books
 {
 
-    public class Book
+    public class BookClass
     {
         public int BookID { get; set; }
         public string ISBN { get; set; }
@@ -19,17 +19,17 @@ namespace LMS.Forms.Books
         public int? PublishedYear { get; set; }
         public string Category { get; set; }
         public int Quantity { get; set; }
-        public int AvailableQuantity { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public int? AvailableQuantity { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 
 
-    public static class Books
+    public class Books
     {
         // ===== Books =====
-        public static List<Book> GetBooks()
+        public static List<BookClass> GetBooks()
         {
-            var list = new List<Book>();
+            var list = new List<BookClass>();
             try
             {
                 using (var conn = Connection.GetConn())
@@ -41,7 +41,7 @@ namespace LMS.Forms.Books
                     {
                         while (r.Read())
                         {
-                            var b = new Book
+                            var b = new BookClass
                             {
                                 ISBN = r.GetString(r.GetOrdinal("ISBN")),
                                 BookID = r.GetInt32(r.GetOrdinal("BookID")),
@@ -69,7 +69,7 @@ namespace LMS.Forms.Books
         }
 
 
-        public static void AddBook(Book b)
+        public static void AddBook(BookClass b)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_AddBook", conn))
@@ -87,7 +87,7 @@ namespace LMS.Forms.Books
             }
         }
 
-        public static void UpdateBook(Book b)
+        public static void UpdateBook(BookClass b)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_UpdateBook", conn))

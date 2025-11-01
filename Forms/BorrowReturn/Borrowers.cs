@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LMS.Forms.BorrowReturn
 {
-    public class BorrowReturn
+    public class BorrowReturnClass
     {
         public int TransactionID { get; set; }
         public int BookID { get; set; }
@@ -28,9 +28,9 @@ namespace LMS.Forms.BorrowReturn
     public static class Borrowers
     {
         // ===================== GET BORROW RECORDS (Filtered) =====================
-        public static List<BorrowReturn> GetBorrowRecords(string status = null)
+        public static List<BorrowReturnClass> GetBorrowRecords(string status = null)
         {
-            var list = new List<BorrowReturn>();
+            var list = new List<BorrowReturnClass>();
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_GetBorrowRecords", conn))
             {
@@ -42,11 +42,12 @@ namespace LMS.Forms.BorrowReturn
                 {
                     while (r.Read())
                     {
-                        var record = new BorrowReturn
+                        var record = new BorrowReturnClass
                         {
                             TransactionID = r.GetInt32(r.GetOrdinal("TransactionID")),
                             BookTitle = r.GetString(r.GetOrdinal("BookTitle")),
                             BorrowerName = r.GetString(r.GetOrdinal("BorrowerName")),
+                            BorrowerContact = r.GetString(r.GetOrdinal("BorrowerContact")),
                             BorrowDate = r.GetDateTime(r.GetOrdinal("BorrowDate")),
                             DueDate = r.GetDateTime(r.GetOrdinal("DueDate")),
                             ReturnDate = r.IsDBNull(r.GetOrdinal("ReturnDate"))
@@ -74,7 +75,7 @@ namespace LMS.Forms.BorrowReturn
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@BookID", bookId);
                 cmd.Parameters.AddWithValue("@BorrowerName", borrowerName);
-                cmd.Parameters.AddWithValue("@BorrowerContact", (object)borrowerContact ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@BorrowerContact", borrowerContact);
                 cmd.Parameters.AddWithValue("@DueDate", dueDate);
                 cmd.Parameters.AddWithValue("@StaffID", staffId);
                 conn.Open(); cmd.ExecuteNonQuery(); conn.Close();

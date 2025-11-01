@@ -11,15 +11,15 @@ namespace LMS
         // ===========================
         // 🔹 Fields
         // ===========================
-        private Button currentButton;
         private Form activeForm;
-        private readonly Staff loggedInStaff;
+        private Button currentButton;
+        private readonly StaffClass loggedInStaff;
         private const string APP_NAME_SHORT = "LMS";
 
         // ===========================
         // 🔹 Constructor
         // ===========================
-        public LMS_FORM(Staff staff)
+        public LMS_FORM(StaffClass staff)
         {
             InitializeComponent();
             loggedInStaff = staff ?? throw new ArgumentNullException(nameof(staff));

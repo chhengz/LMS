@@ -37,7 +37,7 @@
             this.cbx_contact_check = new System.Windows.Forms.CheckBox();
             this.lblStaffName = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtBorrowerContact = new System.Windows.Forms.TextBox();
+            this.txtBContact = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtTID = new System.Windows.Forms.TextBox();
             this.cbBook = new System.Windows.Forms.ComboBox();
@@ -136,13 +136,13 @@
             this.label6.TabIndex = 35;
             this.label6.Text = "Transaction ID";
             // 
-            // txtBorrowerContact
+            // txtBContact
             // 
-            this.txtBorrowerContact.Location = new System.Drawing.Point(367, 19);
-            this.txtBorrowerContact.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.txtBorrowerContact.Name = "txtBorrowerContact";
-            this.txtBorrowerContact.Size = new System.Drawing.Size(254, 28);
-            this.txtBorrowerContact.TabIndex = 0;
+            this.txtBContact.Location = new System.Drawing.Point(367, 19);
+            this.txtBContact.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.txtBContact.Name = "txtBContact";
+            this.txtBContact.Size = new System.Drawing.Size(254, 28);
+            this.txtBContact.TabIndex = 0;
             // 
             // label7
             // 
@@ -238,7 +238,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.txtStatus);
-            this.panel1.Controls.Add(this.txtBorrowerContact);
+            this.panel1.Controls.Add(this.txtBContact);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.txtBorrowerName);
@@ -333,7 +333,7 @@
         private System.Windows.Forms.Button btnBorrow;
         private System.Windows.Forms.Label lblStaffName;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtBorrowerContact;
+        private System.Windows.Forms.TextBox txtBContact;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtTID;
         private System.Windows.Forms.ComboBox cbBook;

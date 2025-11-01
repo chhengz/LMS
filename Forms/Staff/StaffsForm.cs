@@ -10,10 +10,10 @@ namespace LMS
 {
     public partial class StaffsForm : Form
     {
-        private readonly Staff loggedInStaff;
+        private readonly StaffClass loggedInStaff;
         private int row_selected = -1;
 
-        public StaffsForm(Staff staff)
+        public StaffsForm(StaffClass staff)
         {
             InitializeComponent();
             loggedInStaff = staff ?? throw new ArgumentNullException(nameof(staff));
@@ -118,7 +118,7 @@ namespace LMS
             {
                 if (!ValidateFields()) return;
 
-                var newStaff = new Staff
+                var newStaff = new StaffClass
                 {
                     FullName = txtFN.Text,
                     Email = txtEmail.Text,
@@ -152,7 +152,7 @@ namespace LMS
                     return;
                 }
 
-                var updatedStaff = new Staff
+                var updatedStaff = new StaffClass
                 {
                     StaffID = Convert.ToInt32(txtSID.Text),
                     FullName = txtFN.Text,

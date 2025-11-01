@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LMS
 {
-    public class Staff
+    public class StaffClass
     {
         public int StaffID { get; set; }
         public string Username { get; set; }
@@ -18,16 +18,15 @@ namespace LMS
         public string Phone { get; set; }
         public string Role { get; set; }
         public DateTime CreatedAt { get; set; }
-        //public Staff() { }
     }
 
 
     public static class Staffs
     {
         // ===================== GET ALL STAFF =====================
-        public static List<Staff> GetStaff()
+        public static List<StaffClass> GetStaff()
         {
-            var list = new List<Staff>();
+            var list = new List<StaffClass>();
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_GetStaff", conn))
             {
@@ -38,7 +37,7 @@ namespace LMS
                 {
                     while (r.Read())
                     {
-                        var s = new Staff();
+                        var s = new StaffClass();
                         s.StaffID = r.GetInt32(r.GetOrdinal("StaffID"));
                         s.FullName = r.GetString(r.GetOrdinal("FullName"));
                         s.Email = r.GetString(r.GetOrdinal("Email"));
@@ -55,7 +54,7 @@ namespace LMS
         }
 
         // ===================== LOGIN STAFF =====================
-        public static async Task<Staff> GetStaffByLoginAsync(string username, string password)
+        public static async Task<StaffClass> GetStaffByLoginAsync(string username, string password)
         {
             using (var conn = Connection.GetConn())
             {
@@ -70,7 +69,7 @@ namespace LMS
                     {
                         if (await reader.ReadAsync())
                         {
-                            return new Staff
+                            return new StaffClass
                             {
                                 StaffID = int.Parse(reader["StaffID"].ToString()),
                                 Username = reader["Username"].ToString(),
@@ -86,7 +85,7 @@ namespace LMS
         }
 
         // ===================== ADD NEW STAFF =====================
-        public static void AddStaff(Staff s)
+        public static void AddStaff(StaffClass s)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_AddStaff", conn))
@@ -103,7 +102,7 @@ namespace LMS
         }
 
         // ===================== UPDATE =====================
-        public static void UpdateStaff(Staff s)
+        public static void UpdateStaff(StaffClass s)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_UpdateStaff", conn))

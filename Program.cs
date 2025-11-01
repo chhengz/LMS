@@ -16,14 +16,16 @@ namespace LMS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Staff loggedInStaff = new Staff
-            {
-                StaffID = 999,
-                FullName = "Admin",
-                Role = "Admin" // "Admin", "Librarian"
-            };
-            //Application.Run(new LMS_FORM(loggedInStaff));
             Application.Run(new Login_form());
+
+            // ========= Testing purpose only =========
+            //Staff loggedInStaff = new Staff
+            //{
+            //    StaffID = 999,
+            //    FullName = "Admin",
+            //    Role = "Admin" // "Admin", "Librarian"
+            //};
+            //Application.Run(new LMS_FORM(loggedInStaff));
         }
     }
 }

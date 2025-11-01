@@ -9,11 +9,16 @@ namespace LMS
 {
     public partial class BorrowReturnForm : Form
     {
-        private readonly Staff currentStaff;
+        // ===========================
+        // 🔹 Fields
+        // ===========================
         private int selectedTransactionId;
-        
+        private readonly StaffClass currentStaff;
 
-        public BorrowReturnForm(Staff staff)
+        // ===========================
+        // 🔹 Constructor
+        // ===========================
+        public BorrowReturnForm(StaffClass staff)
         {
             InitializeComponent();
             currentStaff = staff;
@@ -32,14 +37,14 @@ namespace LMS
         {
             txtTID.Enabled = false;
             txtStatus.Enabled = false;
-            txtBorrowerContact.Enabled = false;
+            txtBContact.Enabled = false;
             btnReturn.Enabled = false;
         }
 
         private void SetupEventHandlers()
         {
             cbx_contact_check.CheckedChanged += (s, e) =>
-                txtBorrowerContact.Enabled = cbx_contact_check.Checked;
+                txtBContact.Enabled = cbx_contact_check.Checked;
         }
 
         // ===================== LOAD BOOKS =====================
@@ -139,6 +144,7 @@ namespace LMS
 
             Rename("BookTitle", "Title");
             Rename("BorrowerName", "Borrower");
+            Rename("BorrowerContact", "Contact");
             Rename("BorrowDate", "Borrow Date");
             Rename("DueDate", "Due Date");
             Rename("ReturnDate", "Return Date");
@@ -159,6 +165,7 @@ namespace LMS
                 selectedTransactionId = Convert.ToInt32(row.Cells["TransactionID"].Value);
                 txtTID.Text = selectedTransactionId.ToString();
                 txtBorrowerName.Text = row.Cells["BorrowerName"].Value?.ToString() ?? "";
+                txtBContact.Text = row.Cells["BorrowerContact"].Value?.ToString() ?? "";
                 txtStatus.Text = row.Cells["Status"].Value?.ToString() ?? "";
                 dtpBorrowDate.Value = Convert.ToDateTime(row.Cells["BorrowDate"].Value);
 
@@ -188,7 +195,13 @@ namespace LMS
 
                 int bookId = Convert.ToInt32(cbBook.SelectedValue);
                 string borrowerName = txtBorrowerName.Text.Trim();
-                string borrowerContact = txtBorrowerContact.Text.Trim();
+                string borrowerContact = "";
+
+                if (txtBContact.Text != "")
+                {
+                    borrowerContact = txtBContact.Text.Trim();
+                }
+
                 DateTime dueDate = dtpBorrowDate.Value;
                 int staffId = currentStaff.StaffID;
 
@@ -251,7 +264,7 @@ namespace LMS
             selectedTransactionId = 0;
             txtTID.Clear();
             txtBorrowerName.Clear();
-            txtBorrowerContact.Clear();
+            txtBContact.Clear();
             txtStatus.Clear();
             cbBook.SelectedIndex = -1;
             dtpBorrowDate.Value = DateTime.Now;

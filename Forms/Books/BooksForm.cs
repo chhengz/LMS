@@ -7,11 +7,11 @@ namespace LMS
 {
     public partial class BooksForm : Form
     {
-        private readonly Staff loggedInStaff;
+        private readonly StaffClass loggedInStaff;
         private int selectedRowIndex = -1;
         private int selectedBookId;
 
-        public BooksForm(Staff staff)
+        public BooksForm(StaffClass staff)
         {
             InitializeComponent();
             loggedInStaff = staff;
@@ -260,7 +260,7 @@ namespace LMS
                    !string.IsNullOrWhiteSpace(numQty.Text);
         }
 
-        private Book CreateBookFromInputs() => new Book
+        private BookClass CreateBookFromInputs() => new BookClass
         {
             ISBN = txtISBN.Text.Trim(),
             Title = txtTitle.Text.Trim(),
