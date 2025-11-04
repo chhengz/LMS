@@ -11,6 +11,8 @@ namespace LMS
         private int selectedRowIndex = -1;
         private int selectedBookId;
 
+        BookClass b = new BookClass();
+
         public BooksForm(StaffClass staff)
         {
             InitializeComponent();
@@ -25,7 +27,7 @@ namespace LMS
         {
             try
             {
-                dgvBooks.DataSource = Books.GetBooks();
+                dgvBooks.DataSource = b.GetBooks();
                 ConfigureDataGridView();
             }
             catch (Exception ex)
@@ -89,7 +91,7 @@ namespace LMS
                 }
 
                 var newBook = CreateBookFromInputs();
-                Books.AddBook(newBook);
+                b.AddBook(newBook);
                 MessageBox.Show("Book added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadBooks();
             }
@@ -116,7 +118,7 @@ namespace LMS
                 if (confirm == DialogResult.Yes)
                 {
                     int bookId = Convert.ToInt32(dgvBooks.SelectedRows[0].Cells["BookID"].Value);
-                    Books.DeleteBook(bookId);
+                    b.DeleteBook(bookId);
                     MessageBox.Show("Book deleted successfully!", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadBooks();
                 }
@@ -141,7 +143,7 @@ namespace LMS
                 var updatedBook = CreateBookFromInputs();
                 updatedBook.BookID = selectedBookId;
 
-                Books.UpdateBook(updatedBook);
+                b.UpdateBook(updatedBook);
                 MessageBox.Show("Book updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadBooks();
             }
@@ -201,7 +203,7 @@ namespace LMS
                     return;
                 }
 
-                var books = Books.GetBooks();
+                var books = b.GetBooks();
                 var filtered = books.FindAll(b =>
                     (b.Title?.ToLower().Contains(keyword) ?? false) ||
                     (b.Author?.ToLower().Contains(keyword) ?? false) ||
@@ -224,7 +226,7 @@ namespace LMS
             LoadBooks();
         }
 
-        // ===================== UTILITIES =====================
+        // ===================== CLEAR FORM =====================
         private void ClearForm()
         {
             txtISBN.Clear();

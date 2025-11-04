@@ -201,7 +201,6 @@
             // 
             this.txtAvailableQuantity.Location = new System.Drawing.Point(442, 71);
             this.txtAvailableQuantity.Name = "txtAvailableQuantity";
-            this.txtAvailableQuantity.ReadOnly = true;
             this.txtAvailableQuantity.Size = new System.Drawing.Size(106, 28);
             this.txtAvailableQuantity.TabIndex = 0;
             // 

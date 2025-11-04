@@ -13,6 +13,8 @@ namespace LMS
         private readonly StaffClass loggedInStaff;
         private int row_selected = -1;
 
+        StaffClass s = new StaffClass();
+
         public StaffsForm(StaffClass staff)
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace LMS
         {
             try
             {
-                dgvStaff.DataSource = Staffs.GetStaff();
+                dgvStaff.DataSource = s.GetStaff();
                 ConfigureDataGridView();
             }
             catch (Exception ex)
@@ -128,7 +130,7 @@ namespace LMS
                     Role = txtRole.Text
                 };
 
-                Staffs.AddStaff(newStaff);
+                s.AddStaff(newStaff);
                 MessageBox.Show("Staff added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadStaffs();
             }
@@ -163,7 +165,7 @@ namespace LMS
                     Role = txtRole.Text
                 };
 
-                Staffs.UpdateStaff(updatedStaff);
+                s.UpdateStaff(updatedStaff);
                 MessageBox.Show("Staff updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadStaffs();
             }
@@ -192,7 +194,7 @@ namespace LMS
 
                 if (confirm == DialogResult.Yes)
                 {
-                    Staffs.DeleteStaff(staffId);
+                    s.DeleteStaff(staffId);
                     LoadStaffs();
                 }
             }
@@ -220,7 +222,7 @@ namespace LMS
                     return;
                 }
 
-                var staffs = Staffs.GetStaff();
+                var staffs = s.GetStaff();
                 var filtered = staffs.Where(s =>
                     (!string.IsNullOrEmpty(s.FullName) && s.FullName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||
                     (!string.IsNullOrEmpty(s.Email) && s.Email.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||

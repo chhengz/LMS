@@ -22,13 +22,10 @@ namespace LMS.Forms.BorrowReturn
 
         public string BookTitle { get; set; }   // Added for display
         public string StaffName { get; set; }   // Added for display
-    }
+    
 
-
-    public static class Borrowers
-    {
         // ===================== GET BORROW RECORDS (Filtered) =====================
-        public static List<BorrowReturnClass> GetBorrowRecords(string status = null)
+        public List<BorrowReturnClass> GetBorrowRecords(string status = null)
         {
             var list = new List<BorrowReturnClass>();
             using (var conn = Connection.GetConn())
@@ -67,7 +64,7 @@ namespace LMS.Forms.BorrowReturn
 
 
         // ===================== BORROW BOOK =====================
-        public static void BorrowBook(int bookId, string borrowerName, string borrowerContact, DateTime dueDate, int staffId)
+        public void BorrowBook(int bookId, string borrowerName, string borrowerContact, DateTime dueDate, int staffId)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_BorrowBook", conn))
@@ -84,7 +81,7 @@ namespace LMS.Forms.BorrowReturn
 
 
         // ===================== RETURN BOOK =====================
-        public static void ReturnBook(int transactionId)
+        public void ReturnBook(int transactionId)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_ReturnBook", conn))
@@ -97,7 +94,7 @@ namespace LMS.Forms.BorrowReturn
 
 
         // ===================== REMOVE =====================
-        public static void RemoveBorrowRecord(int transactionId)
+        public void RemoveBorrowRecord(int transactionId)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_RemoveBorrowRecord", conn))

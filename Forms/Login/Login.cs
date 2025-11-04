@@ -9,6 +9,22 @@ namespace LMS
 {
     public partial class Login_form : Form
     {
+
+        // ===========================
+        // 🔹 Fields
+        // ===========================
+        StaffClass s = new StaffClass();
+
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+
+
+        // ===========================
+        // 🔹 Constructor
+        // ===========================
         public Login_form()
         {
             InitializeComponent();
@@ -24,11 +40,6 @@ namespace LMS
 
             this.ResumeLayout();
         }
-
-        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
-        private extern static void ReleaseCapture();
-        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
 
         // ===================== LOGIN BUTTON =====================
@@ -48,7 +59,7 @@ namespace LMS
 
             try
             {
-                var staff = await Staffs.GetStaffByLoginAsync(user, pass);
+                var staff = await s.GetStaffByLoginAsync(user, pass);
 
                 if (staff != null)
                 {

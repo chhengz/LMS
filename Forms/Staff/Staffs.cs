@@ -11,20 +11,17 @@ namespace LMS
     public class StaffClass
     {
         public int StaffID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
         public string Role { get; set; }
         public DateTime CreatedAt { get; set; }
-    }
+   
 
-
-    public static class Staffs
-    {
         // ===================== GET ALL STAFF =====================
-        public static List<StaffClass> GetStaff()
+        public List<StaffClass> GetStaff()
         {
             var list = new List<StaffClass>();
             using (var conn = Connection.GetConn())
@@ -54,7 +51,7 @@ namespace LMS
         }
 
         // ===================== LOGIN STAFF =====================
-        public static async Task<StaffClass> GetStaffByLoginAsync(string username, string password)
+        public async Task<StaffClass> GetStaffByLoginAsync(string username, string password)
         {
             using (var conn = Connection.GetConn())
             {
@@ -85,7 +82,7 @@ namespace LMS
         }
 
         // ===================== ADD NEW STAFF =====================
-        public static void AddStaff(StaffClass s)
+        public void AddStaff(StaffClass s)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_AddStaff", conn))
@@ -102,7 +99,7 @@ namespace LMS
         }
 
         // ===================== UPDATE =====================
-        public static void UpdateStaff(StaffClass s)
+        public void UpdateStaff(StaffClass s)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_UpdateStaff", conn))
@@ -120,7 +117,7 @@ namespace LMS
         }
 
         // ===================== DELETE =====================
-        public static void DeleteStaff(int staffId)
+        public void DeleteStaff(int staffId)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_DeleteStaff", conn))

@@ -21,13 +21,12 @@ namespace LMS.Forms.Books
         public int Quantity { get; set; }
         public int? AvailableQuantity { get; set; }
         public DateTime? CreatedAt { get; set; }
-    }
 
 
-    public class Books
-    {
+
+    
         // ===== Books =====
-        public static List<BookClass> GetBooks()
+        public List<BookClass> GetBooks()
         {
             var list = new List<BookClass>();
             try
@@ -69,7 +68,10 @@ namespace LMS.Forms.Books
         }
 
 
-        public static void AddBook(BookClass b)
+        // ===========================
+        // 🔹 ADD BOOKS
+        // ===========================
+        public void AddBook(BookClass b)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_AddBook", conn))
@@ -87,7 +89,10 @@ namespace LMS.Forms.Books
             }
         }
 
-        public static void UpdateBook(BookClass b)
+        // ===========================
+        // 🔹 UPDATE BOOK
+        // ===========================
+        public void UpdateBook(BookClass b)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_UpdateBook", conn))
@@ -100,12 +105,16 @@ namespace LMS.Forms.Books
                 cmd.Parameters.AddWithValue("@PublishedYear", (object)b.PublishedYear ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Category", b.Category);
                 cmd.Parameters.AddWithValue("@Quantity", b.Quantity);
+                cmd.Parameters.AddWithValue("@AvailableQuantity", b.AvailableQuantity);
                 conn.Open(); cmd.ExecuteNonQuery();
                 conn.Close();
             }
         }
 
-        public static void DeleteBook(int bookId)
+        // ===========================
+        // 🔹 DELETE BOOK
+        // ===========================
+        public void DeleteBook(int bookId)
         {
             using (var conn = Connection.GetConn())
             using (var cmd = new SqlCommand("sp_DeleteBook", conn))

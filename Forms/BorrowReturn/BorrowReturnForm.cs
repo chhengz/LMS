@@ -15,6 +15,8 @@ namespace LMS
         private int selectedTransactionId;
         private readonly StaffClass currentStaff;
 
+        BorrowReturnClass br = new BorrowReturnClass();
+
         // ===========================
         // 🔹 Constructor
         // ===========================
@@ -79,7 +81,7 @@ namespace LMS
         {
             try
             {
-                dgvBorrower.DataSource = Borrowers.GetBorrowRecords(status);
+                dgvBorrower.DataSource = br.GetBorrowRecords(status);
                 ConfigureDataGridView();
             }
             catch (Exception ex)
@@ -205,7 +207,7 @@ namespace LMS
                 DateTime dueDate = dtpBorrowDate.Value;
                 int staffId = currentStaff.StaffID;
 
-                Borrowers.BorrowBook(bookId, borrowerName, borrowerContact, dueDate, staffId);
+                br.BorrowBook(bookId, borrowerName, borrowerContact, dueDate, staffId);
 
                 MessageBox.Show("Book borrowed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadBorrowers();
@@ -237,7 +239,7 @@ namespace LMS
             {
                 try
                 {
-                    Borrowers.ReturnBook(selectedTransactionId);
+                    br.ReturnBook(selectedTransactionId);
                     MessageBox.Show("Book returned successfully ✅", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadBorrowers();
                 }
@@ -285,7 +287,7 @@ namespace LMS
                     return;
                 }
 
-                var borrowers = Borrowers.GetBorrowRecords();
+                var borrowers = br.GetBorrowRecords();
                 var filtered = borrowers.FindAll(b =>
                     (b.BorrowerName?.ToLower().Contains(keyword) ?? false) ||
                     (b.BookTitle?.ToLower().Contains(keyword) ?? false) ||
