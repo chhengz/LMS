@@ -22,8 +22,6 @@ namespace LMS.Forms.Books
         public int? AvailableQuantity { get; set; }
         public DateTime? CreatedAt { get; set; }
 
-
-
     
         // ===== Books =====
         public List<BookClass> GetBooks()
@@ -105,7 +103,6 @@ namespace LMS.Forms.Books
                 cmd.Parameters.AddWithValue("@PublishedYear", (object)b.PublishedYear ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Category", b.Category);
                 cmd.Parameters.AddWithValue("@Quantity", b.Quantity);
-                cmd.Parameters.AddWithValue("@AvailableQuantity", b.AvailableQuantity);
                 conn.Open(); cmd.ExecuteNonQuery();
                 conn.Close();
             }

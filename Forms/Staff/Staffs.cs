@@ -17,7 +17,7 @@ namespace LMS
         public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
    
 
         // ===================== GET ALL STAFF =====================
