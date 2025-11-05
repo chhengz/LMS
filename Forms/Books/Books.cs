@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace LMS.Forms.Books
 {
-
     public class BookClass
     {
         public int BookID { get; set; }
@@ -22,8 +21,10 @@ namespace LMS.Forms.Books
         public int? AvailableQuantity { get; set; }
         public DateTime? CreatedAt { get; set; }
 
-    
-        // ===== Books =====
+
+        // ===========================
+        // 🔹 GET BOOKS
+        // ===========================
         public List<BookClass> GetBooks()
         {
             var list = new List<BookClass>();

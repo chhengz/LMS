@@ -38,9 +38,6 @@
             this.txtSID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.r1 = new System.Windows.Forms.Button();
-            this.r2 = new System.Windows.Forms.Button();
-            this.txtRole = new System.Windows.Forms.TextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.chPass = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -56,6 +53,8 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.r1 = new System.Windows.Forms.RadioButton();
+            this.r2 = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaff)).BeginInit();
@@ -147,9 +146,8 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.r1);
             this.panel2.Controls.Add(this.r2);
-            this.panel2.Controls.Add(this.txtRole);
+            this.panel2.Controls.Add(this.r1);
             this.panel2.Controls.Add(this.txtPass);
             this.panel2.Controls.Add(this.chPass);
             this.panel2.Controls.Add(this.label4);
@@ -157,37 +155,8 @@
             this.panel2.Controls.Add(this.txtUser);
             this.panel2.Location = new System.Drawing.Point(13, 137);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(683, 56);
+            this.panel2.Size = new System.Drawing.Size(819, 56);
             this.panel2.TabIndex = 23;
-            // 
-            // r1
-            // 
-            this.r1.Location = new System.Drawing.Point(618, 19);
-            this.r1.Name = "r1";
-            this.r1.Size = new System.Drawing.Size(28, 28);
-            this.r1.TabIndex = 6;
-            this.r1.Text = "1";
-            this.r1.UseVisualStyleBackColor = true;
-            this.r1.Click += new System.EventHandler(this.r1_Click);
-            // 
-            // r2
-            // 
-            this.r2.Location = new System.Drawing.Point(649, 19);
-            this.r2.Name = "r2";
-            this.r2.Size = new System.Drawing.Size(28, 28);
-            this.r2.TabIndex = 7;
-            this.r2.Text = "2";
-            this.r2.UseVisualStyleBackColor = true;
-            this.r2.Click += new System.EventHandler(this.r2_Click);
-            // 
-            // txtRole
-            // 
-            this.txtRole.Location = new System.Drawing.Point(453, 19);
-            this.txtRole.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.txtRole.Name = "txtRole";
-            this.txtRole.ReadOnly = true;
-            this.txtRole.Size = new System.Drawing.Size(159, 28);
-            this.txtRole.TabIndex = 0;
             // 
             // txtPass
             // 
@@ -339,6 +308,28 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // r1
+            // 
+            this.r1.AutoSize = true;
+            this.r1.Location = new System.Drawing.Point(462, 22);
+            this.r1.Name = "r1";
+            this.r1.Size = new System.Drawing.Size(62, 23);
+            this.r1.TabIndex = 31;
+            this.r1.TabStop = true;
+            this.r1.Text = "Admin";
+            this.r1.UseVisualStyleBackColor = true;
+            // 
+            // r2
+            // 
+            this.r2.AutoSize = true;
+            this.r2.Location = new System.Drawing.Point(530, 22);
+            this.r2.Name = "r2";
+            this.r2.Size = new System.Drawing.Size(75, 23);
+            this.r2.TabIndex = 32;
+            this.r2.TabStop = true;
+            this.r2.Text = "Librarian";
+            this.r2.UseVisualStyleBackColor = true;
+            // 
             // StaffsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
@@ -398,8 +389,7 @@
         private System.Windows.Forms.DateTimePicker dobCreatedAt;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.CheckBox chPass;
-        private System.Windows.Forms.TextBox txtRole;
-        private System.Windows.Forms.Button r1;
-        private System.Windows.Forms.Button r2;
+        private System.Windows.Forms.RadioButton r2;
+        private System.Windows.Forms.RadioButton r1;
     }
 }

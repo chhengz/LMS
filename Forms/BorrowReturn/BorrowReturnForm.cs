@@ -29,25 +29,31 @@ namespace LMS
             LoadBorrowers();
 
             SetupUI();
-            SetupEventHandlers();
+            //SetupEventHandlers();
 
-            lblStaffName.Text = $"Staff: {currentStaff.FullName}, Role: {currentStaff.Role}";
+            //lblStaffName.Text = $"Staff: {currentStaff.FullName}, Role: {currentStaff.Role}";
         }
 
         // ===================== INITIAL SETUP =====================
         private void SetupUI()
         {
-            txtTID.Enabled = false;
-            txtStatus.Enabled = false;
-            txtBContact.Enabled = false;
+            //txtTID.Enabled = false;
+            //txtStatus.Enabled = false;
+            //txtBContact.Enabled = false;
+            btnDelete.Enabled = false;
             btnReturn.Enabled = false;
+
+            // 🔹 Enable AutoSuggest for the Book ComboBox
+            cbBook.DropDownStyle = ComboBoxStyle.DropDown;
+            cbBook.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cbBook.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
-        private void SetupEventHandlers()
-        {
-            cbx_contact_check.CheckedChanged += (s, e) =>
-                txtBContact.Enabled = cbx_contact_check.Checked;
-        }
+        //private void SetupEventHandlers()
+        //{
+        //    cbx_contact_check.CheckedChanged += (s, e) =>
+        //        txtBContact.Enabled = cbx_contact_check.Checked;
+        //}
 
         // ===================== LOAD BOOKS =====================
         private void LoadBooks()
@@ -70,6 +76,8 @@ namespace LMS
                 MessageBox.Show($"Error loading books: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        
 
         private void BorrowReturnForm_Load(object sender, EventArgs e)
         {
@@ -177,6 +185,7 @@ namespace LMS
 
                 btnBorrow.Enabled = false;
                 btnReturn.Enabled = true;
+                btnDelete.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -254,6 +263,40 @@ namespace LMS
             }
         }
 
+
+        // ===================== DELETE BUTTON =====================
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (selectedTransactionId == 0)
+                {
+                    MessageBox.Show("Please select a record to delete.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (txtStatus.Text != "Returned")
+                {
+                    MessageBox.Show("Only returned records can be deleted.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var confirm = MessageBox.Show(
+                    "Are you sure you want to delete this borrow record? This action cannot be undone.",
+                    "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirm == DialogResult.Yes)
+                {
+                    br.RemoveBorrowRecord(selectedTransactionId);
+                    MessageBox.Show("Record deleted successfully ✅", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadBorrowers();
+                    ClearForm();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting record: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         // ===================== CLEAR / SEARCH =====================
         private void btnClear_Click(object sender, EventArgs e)
         {
@@ -274,8 +317,10 @@ namespace LMS
 
             btnBorrow.Enabled = true;
             btnReturn.Enabled = false;
+            btnDelete.Enabled = false;
         }
 
+        // ===================== SEARCH & FILTER =====================
         private void btnSearch_Click(object sender, EventArgs e)
         {
             try
@@ -300,7 +345,7 @@ namespace LMS
                 MessageBox.Show($"Error searching records: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        
         private void rbtnBorrowed_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtnBorrowed.Checked)
@@ -318,7 +363,5 @@ namespace LMS
             if (rbtnAll.Checked)
                 LoadBorrowers(); // NULL → show all
         }
-
-        
     }
 }

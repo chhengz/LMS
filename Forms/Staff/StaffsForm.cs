@@ -65,6 +65,9 @@ namespace LMS
                     dgvStaff.Columns[col].HeaderText = header;
             };
 
+            // Hide unnecessary columns
+            if (dgvStaff.Columns["Password"] != null) dgvStaff.Columns["Password"].Visible = false;
+
             Rename("StaffID", "Staff ID");
             Rename("FullName", "Full Name");
             Rename("Email", "Email");
@@ -93,7 +96,23 @@ namespace LMS
                 txtPhone.Text = row.Cells["Phone"].Value?.ToString() ?? "";
                 txtUser.Text = row.Cells["Username"].Value?.ToString() ?? "";
                 txtPass.Text = row.Cells["Password"].Value?.ToString() ?? "";
-                txtRole.Text = row.Cells["Role"].Value?.ToString() ?? "";
+                //txtRole.Text = row.Cells["Role"].Value?.ToString() ?? "";
+                string role = row.Cells["Role"].Value?.ToString() ?? "";
+                if (role == "Admin")
+                {
+                    r1.Checked = true;
+                    r2.Checked = false;
+                }
+                else if (role == "Librarian")
+                {
+                    r1.Checked = false;
+                    r2.Checked = true;
+                }
+                else
+                {
+                    r1.Checked = false;
+                    r2.Checked = false;
+                }
 
                 if (row.Cells["CreatedAt"].Value != null && row.Cells["CreatedAt"].Value != DBNull.Value)
                     dobCreatedAt.Value = Convert.ToDateTime(row.Cells["CreatedAt"].Value);
@@ -127,7 +146,8 @@ namespace LMS
                     Phone = txtPhone.Text,
                     Username = txtUser.Text,
                     Password = txtPass.Text,
-                    Role = txtRole.Text
+                    //Role = txtRole.Text
+                    Role = r1.Checked ? "Admin" : "Librarian"
                 };
 
                 s.AddStaff(newStaff);
@@ -162,7 +182,8 @@ namespace LMS
                     Phone = txtPhone.Text,
                     Username = txtUser.Text,
                     Password = txtPass.Text,
-                    Role = txtRole.Text
+                    //Role = txtRole.Text
+                    Role = r1.Checked ? "Admin" : "Librarian"
                 };
 
                 s.UpdateStaff(updatedStaff);
@@ -251,7 +272,10 @@ namespace LMS
             txtPhone.Clear();
             txtUser.Clear();
             txtPass.Clear();
-            txtRole.Clear();
+            //txtRole.Clear();
+
+            r1.Checked = false;
+            r2.Checked = false;
 
             btnSave.Enabled = true;
             btnEdit.Enabled = false;
@@ -272,12 +296,18 @@ namespace LMS
             if (string.IsNullOrWhiteSpace(txtFN.Text) ||
                 string.IsNullOrWhiteSpace(txtEmail.Text) ||
                 string.IsNullOrWhiteSpace(txtUser.Text) ||
-                string.IsNullOrWhiteSpace(txtPass.Text) ||
-                string.IsNullOrWhiteSpace(txtRole.Text))
+                string.IsNullOrWhiteSpace(txtPass.Text))
             {
                 MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
+            if (!r1.Checked && !r2.Checked)
+            {
+                MessageBox.Show("Please select a role (Admin or Librarian).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             return true;
         }
 
@@ -286,8 +316,8 @@ namespace LMS
             MessageBox.Show($"{message}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void r1_Click(object sender, EventArgs e) => txtRole.Text = "Admin";
-        private void r2_Click(object sender, EventArgs e) => txtRole.Text = "Librarian";
+        //private void r1_Click(object sender, EventArgs e) => txtRole.Text = "Admin";
+        //private void r2_Click(object sender, EventArgs e) => txtRole.Text = "Librarian";
         #endregion
     }
 }

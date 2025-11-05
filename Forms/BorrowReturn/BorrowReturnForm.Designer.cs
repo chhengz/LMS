@@ -34,8 +34,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtBorrowerName = new System.Windows.Forms.TextBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.cbx_contact_check = new System.Windows.Forms.CheckBox();
-            this.lblStaffName = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtBContact = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -48,9 +46,11 @@
             this.btnBorrow = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.rbtnBorrowed = new System.Windows.Forms.RadioButton();
             this.rbtnReturned = new System.Windows.Forms.RadioButton();
             this.rbtnAll = new System.Windows.Forms.RadioButton();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBorrower)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -107,25 +107,6 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(230, 28);
             this.txtSearch.TabIndex = 7;
-            // 
-            // cbx_contact_check
-            // 
-            this.cbx_contact_check.AutoSize = true;
-            this.cbx_contact_check.Location = new System.Drawing.Point(367, -1);
-            this.cbx_contact_check.Name = "cbx_contact_check";
-            this.cbx_contact_check.Size = new System.Drawing.Size(96, 23);
-            this.cbx_contact_check.TabIndex = 2;
-            this.cbx_contact_check.Text = "Contact info";
-            this.cbx_contact_check.UseVisualStyleBackColor = true;
-            // 
-            // lblStaffName
-            // 
-            this.lblStaffName.AutoSize = true;
-            this.lblStaffName.Location = new System.Drawing.Point(367, 75);
-            this.lblStaffName.Name = "lblStaffName";
-            this.lblStaffName.Size = new System.Drawing.Size(90, 19);
-            this.lblStaffName.TabIndex = 37;
-            this.lblStaffName.Text = "{lblStaffName}";
             // 
             // label6
             // 
@@ -192,7 +173,7 @@
             // btnClear
             // 
             this.btnClear.Image = global::LMS.Properties.Resources.broom_32px;
-            this.btnClear.Location = new System.Drawing.Point(230, 164);
+            this.btnClear.Location = new System.Drawing.Point(382, 68);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(34, 33);
             this.btnClear.TabIndex = 6;
@@ -220,7 +201,7 @@
             this.btnBorrow.Name = "btnBorrow";
             this.btnBorrow.Size = new System.Drawing.Size(100, 34);
             this.btnBorrow.TabIndex = 4;
-            this.btnBorrow.Text = "Add New";
+            this.btnBorrow.Text = "Save";
             this.btnBorrow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnBorrow.UseVisualStyleBackColor = true;
             this.btnBorrow.Click += new System.EventHandler(this.btnBorrow_Click);
@@ -237,15 +218,15 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.txtStatus);
             this.panel1.Controls.Add(this.txtBContact);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.txtBorrowerName);
+            this.panel1.Controls.Add(this.btnClear);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.cbBook);
-            this.panel1.Controls.Add(this.lblStaffName);
-            this.panel1.Controls.Add(this.cbx_contact_check);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.txtTID);
             this.panel1.Location = new System.Drawing.Point(12, 46);
@@ -253,10 +234,19 @@
             this.panel1.Size = new System.Drawing.Size(822, 112);
             this.panel1.TabIndex = 44;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(363, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 19);
+            this.label3.TabIndex = 38;
+            this.label3.Text = "Contact info";
+            // 
             // rbtnBorrowed
             // 
             this.rbtnBorrowed.AutoSize = true;
-            this.rbtnBorrowed.Location = new System.Drawing.Point(394, 173);
+            this.rbtnBorrowed.Location = new System.Drawing.Point(394, 168);
             this.rbtnBorrowed.Name = "rbtnBorrowed";
             this.rbtnBorrowed.Size = new System.Drawing.Size(80, 23);
             this.rbtnBorrowed.TabIndex = 45;
@@ -268,7 +258,7 @@
             // rbtnReturned
             // 
             this.rbtnReturned.AutoSize = true;
-            this.rbtnReturned.Location = new System.Drawing.Point(480, 173);
+            this.rbtnReturned.Location = new System.Drawing.Point(480, 168);
             this.rbtnReturned.Name = "rbtnReturned";
             this.rbtnReturned.Size = new System.Drawing.Size(78, 23);
             this.rbtnReturned.TabIndex = 46;
@@ -280,7 +270,7 @@
             // rbtnAll
             // 
             this.rbtnAll.AutoSize = true;
-            this.rbtnAll.Location = new System.Drawing.Point(346, 173);
+            this.rbtnAll.Location = new System.Drawing.Point(346, 168);
             this.rbtnAll.Name = "rbtnAll";
             this.rbtnAll.Size = new System.Drawing.Size(42, 23);
             this.rbtnAll.TabIndex = 47;
@@ -289,18 +279,31 @@
             this.rbtnAll.UseVisualStyleBackColor = true;
             this.rbtnAll.CheckedChanged += new System.EventHandler(this.rbtnAll_CheckedChanged);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Image = global::LMS.Properties.Resources.delete_bin_30px;
+            this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDelete.Location = new System.Drawing.Point(230, 164);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(88, 34);
+            this.btnDelete.TabIndex = 48;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // BorrowReturnForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 480);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.rbtnAll);
             this.Controls.Add(this.rbtnBorrowed);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.rbtnReturned);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.btnBorrow);
             this.Controls.Add(this.txtSearch);
@@ -328,10 +331,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtBorrowerName;
         private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.CheckBox cbx_contact_check;
         private System.Windows.Forms.Button btnReturn;
         private System.Windows.Forms.Button btnBorrow;
-        private System.Windows.Forms.Label lblStaffName;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtBContact;
         private System.Windows.Forms.Label label7;
@@ -345,5 +346,7 @@
         private System.Windows.Forms.RadioButton rbtnBorrowed;
         private System.Windows.Forms.RadioButton rbtnReturned;
         private System.Windows.Forms.RadioButton rbtnAll;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnDelete;
     }
 }
