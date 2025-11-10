@@ -91,7 +91,7 @@ namespace LMS
         // ===================== Clear Fields BUTTON =====================
         public void ClearForm()
         {
-            txtUsername.Clear();
+            txtUsername.Clear();    
             txtPassword.Clear();
             txtUsername.Focus();
         }

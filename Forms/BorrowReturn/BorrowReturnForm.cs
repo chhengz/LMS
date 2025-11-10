@@ -13,7 +13,7 @@ namespace LMS
         // 🔹 Fields
         // ===========================
         private int selectedTransactionId;
-        private readonly StaffClass currentStaff;
+        private readonly StaffClass loggedInStaff;
 
         BorrowReturnClass br = new BorrowReturnClass();
 
@@ -23,23 +23,17 @@ namespace LMS
         public BorrowReturnForm(StaffClass staff)
         {
             InitializeComponent();
-            currentStaff = staff;
+            loggedInStaff = staff;
 
             LoadBooks();
             LoadBorrowers();
 
             SetupUI();
-            //SetupEventHandlers();
-
-            //lblStaffName.Text = $"Staff: {currentStaff.FullName}, Role: {currentStaff.Role}";
         }
 
         // ===================== INITIAL SETUP =====================
         private void SetupUI()
         {
-            //txtTID.Enabled = false;
-            //txtStatus.Enabled = false;
-            //txtBContact.Enabled = false;
             btnDelete.Enabled = false;
             btnReturn.Enabled = false;
 
@@ -49,11 +43,6 @@ namespace LMS
             cbBook.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
-        //private void SetupEventHandlers()
-        //{
-        //    cbx_contact_check.CheckedChanged += (s, e) =>
-        //        txtBContact.Enabled = cbx_contact_check.Checked;
-        //}
 
         // ===================== LOAD BOOKS =====================
         private void LoadBooks()
@@ -116,15 +105,6 @@ namespace LMS
                 dgvBorrower.BeginInvoke(new MethodInvoker(() => LoadBorrowers(status)));
             else
                 LoadBorrowers(status);
-
-
-            //string status = rbtnBorrowed.Checked ? "Borrowed" :
-            //                rbtnReturned.Checked ? "Returned" : null;
-
-            //if (InvokeRequired)
-            //    dgvBorrower.BeginInvoke(new MethodInvoker(() => LoadBorrowers(status)));
-            //else
-            //    LoadBorrowers(status);
         }
 
 
@@ -185,7 +165,7 @@ namespace LMS
 
                 btnBorrow.Enabled = false;
                 btnReturn.Enabled = true;
-                btnDelete.Enabled = true;
+                btnDelete.Enabled = loggedInStaff.Role == "Admin";
             }
             catch (Exception ex)
             {
@@ -214,7 +194,7 @@ namespace LMS
                 }
 
                 DateTime dueDate = dtpBorrowDate.Value;
-                int staffId = currentStaff.StaffID;
+                int staffId = loggedInStaff.StaffID;
 
                 br.BorrowBook(bookId, borrowerName, borrowerContact, dueDate, staffId);
 
