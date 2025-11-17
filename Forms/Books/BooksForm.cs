@@ -1,6 +1,7 @@
 ﻿using LMS.Forms.Books;
 using System;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace LMS
@@ -37,6 +38,7 @@ namespace LMS
         }
 
         // ===================== CONFIGURE GRID =====================
+
         private void ConfigureDataGridView()
         {
             dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -45,6 +47,30 @@ namespace LMS
             dgvBooks.AllowUserToAddRows = false;
             dgvBooks.AllowUserToDeleteRows = false;
             dgvBooks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // ===== Custom UI Styling =====
+            //dgvBooks.BorderStyle = BorderStyle.None;
+            //dgvBooks.BackgroundColor = Color.White;
+            //dgvBooks.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            //dgvBooks.RowHeadersVisible = false;
+
+            // Header style
+            dgvBooks.EnableHeadersVisualStyles = false;
+            dgvBooks.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(30, 144, 255); // DodgerBlue
+            dgvBooks.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            //dgvBooks.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            //dgvBooks.ColumnHeadersHeight = 40;
+
+            // Rows style
+            //dgvBooks.DefaultCellStyle.BackColor = Color.White;
+            //dgvBooks.DefaultCellStyle.ForeColor = Color.Black;
+            //dgvBooks.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            //dgvBooks.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 230); // LightBlue
+            //dgvBooks.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            // Alternating rows
+            dgvBooks.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+
 
             // Column headers
             void Rename(string col, string header)
@@ -194,32 +220,38 @@ namespace LMS
         // ===================== SEARCH BUTTON =====================
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            SearchBooks();
+        }
+
+
+        private void SearchBooks()
+        {
             try
             {
                 string keyword = txtSearch.Text.Trim().ToLower();
+
                 if (string.IsNullOrEmpty(keyword))
                 {
                     LoadBooks();
                     return;
                 }
 
-                
-
                 var books = b.GetBooks();
+
                 var filtered = books.FindAll(b =>
                     (b.Title?.ToLower().Contains(keyword) ?? false) ||
                     (b.Author?.ToLower().Contains(keyword) ?? false) ||
-                    (b.ISBN?.ToLower().Contains(keyword) ?? false) ||
-                    (b.Category?.ToLower().Contains(keyword) ?? false) ||
-                    (b.Publisher?.ToLower().Contains(keyword) ?? false));
+                    (b.ISBN?.ToLower().Contains(keyword) ?? false));
 
                 dgvBooks.DataSource = filtered;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error searching books: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error searching records: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // ===================== CLEAR BUTTON =====================
         private void btnClear_Click(object sender, EventArgs e)
@@ -285,6 +317,11 @@ namespace LMS
                     return false;
             }
             return true;
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            SearchBooks();
         }
     }
 }

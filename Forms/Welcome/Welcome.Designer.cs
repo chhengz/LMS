@@ -37,14 +37,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panelCenter = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panelCenter.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(232, 1);
+            this.pictureBox1.Location = new System.Drawing.Point(45, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(380, 215);
@@ -56,7 +58,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(267, 220);
+            this.label1.Location = new System.Drawing.Point(80, 219);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(311, 25);
@@ -125,29 +127,41 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Location = new System.Drawing.Point(190, 260);
+            this.panel1.Location = new System.Drawing.Point(3, 259);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(465, 139);
             this.panel1.TabIndex = 7;
+            // 
+            // panelCenter
+            // 
+            this.panelCenter.Controls.Add(this.pictureBox1);
+            this.panelCenter.Controls.Add(this.panel1);
+            this.panelCenter.Controls.Add(this.label1);
+            this.panelCenter.Location = new System.Drawing.Point(185, 25);
+            this.panelCenter.Name = "panelCenter";
+            this.panelCenter.Size = new System.Drawing.Size(474, 401);
+            this.panelCenter.TabIndex = 8;
             // 
             // Welcome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(844, 451);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.panelCenter);
             this.Font = new System.Drawing.Font("Khmer OS Battambang", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Welcome";
             this.Text = "Welcome";
+            this.Load += new System.EventHandler(this.Welcome_Load);
+            this.SizeChanged += new System.EventHandler(this.Welcome_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panelCenter.ResumeLayout(false);
+            this.panelCenter.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -161,5 +175,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelCenter;
     }
 }

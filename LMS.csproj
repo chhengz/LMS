@@ -53,12 +53,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ThemeColor.cs" />
     <Compile Include="Core\App.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Core\App.Designer.cs">
       <DependentUpon>App.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Core\SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Books\Books.cs" />
     <Compile Include="Forms\Books\BooksForm.cs">
@@ -98,6 +103,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Core\App.resx">
       <DependentUpon>App.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Books\BooksForm.resx">
       <DependentUpon>BooksForm.cs</DependentUpon>

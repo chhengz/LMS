@@ -1,31 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LMS
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login_form());
 
-            // ========= Testing purpose only =========
-            //Staff loggedInStaff = new Staff
-            //{
-            //    StaffID = 999,
-            //    FullName = "Admin",
-            //    Role = "Admin" // "Admin", "Librarian"
-            //};
-            //Application.Run(new LMS_FORM(loggedInStaff));
+            StaffClass s = new StaffClass
+            {
+                StaffID = 3,
+                FullName = "Vang Sokchheng",
+                Username = "sokchheng",
+                Password = "123",
+                Role = "Admin"
+            };
+
+            Application.Run(new LMS_FORM(s));
+            //Application.Run(new SplashScreen());
         }
     }
 }

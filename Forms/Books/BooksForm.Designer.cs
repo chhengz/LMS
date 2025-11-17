@@ -60,12 +60,15 @@
             // 
             // dgvBooks
             // 
+            this.dgvBooks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBooks.Location = new System.Drawing.Point(0, 205);
             this.dgvBooks.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.dgvBooks.Name = "dgvBooks";
             this.dgvBooks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBooks.Size = new System.Drawing.Size(844, 271);
+            this.dgvBooks.Size = new System.Drawing.Size(844, 261);
             this.dgvBooks.TabIndex = 16;
             this.dgvBooks.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBooks_CellClick);
             // 
@@ -166,6 +169,9 @@
             // 
             // btnEdit
             // 
+            this.btnEdit.BackColor = System.Drawing.SystemColors.Control;
+            this.btnEdit.FlatAppearance.BorderSize = 0;
+            this.btnEdit.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::LMS.Properties.Resources.edit_file_30px;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEdit.Location = new System.Drawing.Point(124, 164);
@@ -174,11 +180,14 @@
             this.btnEdit.TabIndex = 11;
             this.btnEdit.Text = "Update";
             this.btnEdit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
             // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.Control;
+            this.btnDelete.FlatAppearance.BorderSize = 0;
+            this.btnDelete.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::LMS.Properties.Resources.delete_bin_30px;
             this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDelete.Location = new System.Drawing.Point(229, 164);
@@ -187,7 +196,7 @@
             this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // numQty
@@ -216,10 +225,12 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(564, 168);
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearch.Location = new System.Drawing.Point(552, 168);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(230, 28);
             this.txtSearch.TabIndex = 14;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // numYear
             // 
@@ -238,6 +249,7 @@
             // 
             // dobCreatedAt
             // 
+            this.dobCreatedAt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.dobCreatedAt.CustomFormat = "dd-MM-yyyy";
             this.dobCreatedAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dobCreatedAt.Location = new System.Drawing.Point(702, 12);
@@ -257,6 +269,9 @@
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::LMS.Properties.Resources.add_30px;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.Location = new System.Drawing.Point(18, 164);
@@ -265,13 +280,14 @@
             this.btnSave.TabIndex = 10;
             this.btnSave.Text = "Save";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnSearch
             // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.Image = global::LMS.Properties.Resources.search_30px;
-            this.btnSearch.Location = new System.Drawing.Point(800, 164);
+            this.btnSearch.Location = new System.Drawing.Point(788, 164);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(34, 34);
             this.btnSearch.TabIndex = 15;
@@ -290,6 +306,8 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.txtISBN);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label2);

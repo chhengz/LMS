@@ -29,6 +29,16 @@ namespace LMS
         {
             InitializeComponent();
             this.SuspendLayout();
+
+            //pictureBox1.Parent = pic_main;
+            //pictureBox1.BackColor = System.Drawing.Color.Transparent;
+
+            pic_logo.Parent = pic_main;
+            pic_logo.BackColor = System.Drawing.Color.Transparent;
+
+            label3.Parent = pic_main;
+            label3.BackColor = System.Drawing.Color.Transparent;
+
             this.AcceptButton = btnLogin;
 
             txtPassword.UseSystemPasswordChar = true;
@@ -110,12 +120,16 @@ namespace LMS
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-        private void Login_form_MouseDown(object sender, MouseEventArgs e)
+        private void pic_main_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-       
+        private void pic_logo_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
     }
 }

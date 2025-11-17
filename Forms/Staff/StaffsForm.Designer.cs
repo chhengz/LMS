@@ -38,6 +38,8 @@
             this.txtSID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.r2 = new System.Windows.Forms.RadioButton();
+            this.r1 = new System.Windows.Forms.RadioButton();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.chPass = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,8 +55,6 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.r1 = new System.Windows.Forms.RadioButton();
-            this.r2 = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaff)).BeginInit();
@@ -96,6 +96,7 @@
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.txtPhone);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label2);
@@ -146,6 +147,7 @@
             // 
             // panel2
             // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.r2);
             this.panel2.Controls.Add(this.r1);
             this.panel2.Controls.Add(this.txtPass);
@@ -157,6 +159,28 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(819, 56);
             this.panel2.TabIndex = 23;
+            // 
+            // r2
+            // 
+            this.r2.AutoSize = true;
+            this.r2.Location = new System.Drawing.Point(530, 22);
+            this.r2.Name = "r2";
+            this.r2.Size = new System.Drawing.Size(75, 23);
+            this.r2.TabIndex = 32;
+            this.r2.TabStop = true;
+            this.r2.Text = "Librarian";
+            this.r2.UseVisualStyleBackColor = true;
+            // 
+            // r1
+            // 
+            this.r1.AutoSize = true;
+            this.r1.Location = new System.Drawing.Point(462, 22);
+            this.r1.Name = "r1";
+            this.r1.Size = new System.Drawing.Size(62, 23);
+            this.r1.TabIndex = 31;
+            this.r1.TabStop = true;
+            this.r1.Text = "Admin";
+            this.r1.UseVisualStyleBackColor = true;
             // 
             // txtPass
             // 
@@ -224,24 +248,30 @@
             // 
             // dgvStaff
             // 
+            this.dgvStaff.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvStaff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStaff.Location = new System.Drawing.Point(0, 240);
             this.dgvStaff.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.dgvStaff.Name = "dgvStaff";
             this.dgvStaff.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStaff.Size = new System.Drawing.Size(844, 238);
+            this.dgvStaff.Size = new System.Drawing.Size(844, 226);
             this.dgvStaff.TabIndex = 14;
             this.dgvStaff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStaff_CellClick);
             // 
             // txtSearch
             // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(562, 204);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(230, 28);
             this.txtSearch.TabIndex = 12;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // dobCreatedAt
             // 
+            this.dobCreatedAt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.dobCreatedAt.CustomFormat = "dd-MM-yyyy";
             this.dobCreatedAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dobCreatedAt.Location = new System.Drawing.Point(702, 12);
@@ -261,6 +291,7 @@
             // 
             // btnSearch
             // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.Image = global::LMS.Properties.Resources.search_30px;
             this.btnSearch.Location = new System.Drawing.Point(798, 199);
             this.btnSearch.Name = "btnSearch";
@@ -271,6 +302,9 @@
             // 
             // btnDelete
             // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.Control;
+            this.btnDelete.FlatAppearance.BorderSize = 0;
+            this.btnDelete.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::LMS.Properties.Resources.delete_bin_30px;
             this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDelete.Location = new System.Drawing.Point(232, 199);
@@ -279,11 +313,14 @@
             this.btnDelete.TabIndex = 10;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnEdit
             // 
+            this.btnEdit.BackColor = System.Drawing.SystemColors.Control;
+            this.btnEdit.FlatAppearance.BorderSize = 0;
+            this.btnEdit.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.Image = global::LMS.Properties.Resources.edit_file_30px;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEdit.Location = new System.Drawing.Point(126, 199);
@@ -292,11 +329,14 @@
             this.btnEdit.TabIndex = 9;
             this.btnEdit.Text = "Update";
             this.btnEdit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Image = global::LMS.Properties.Resources.add_30px;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.Location = new System.Drawing.Point(20, 199);
@@ -305,30 +345,8 @@
             this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Save";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // r1
-            // 
-            this.r1.AutoSize = true;
-            this.r1.Location = new System.Drawing.Point(462, 22);
-            this.r1.Name = "r1";
-            this.r1.Size = new System.Drawing.Size(62, 23);
-            this.r1.TabIndex = 31;
-            this.r1.TabStop = true;
-            this.r1.Text = "Admin";
-            this.r1.UseVisualStyleBackColor = true;
-            // 
-            // r2
-            // 
-            this.r2.AutoSize = true;
-            this.r2.Location = new System.Drawing.Point(530, 22);
-            this.r2.Name = "r2";
-            this.r2.Size = new System.Drawing.Size(75, 23);
-            this.r2.TabIndex = 32;
-            this.r2.TabStop = true;
-            this.r2.Text = "Librarian";
-            this.r2.UseVisualStyleBackColor = true;
             // 
             // StaffsForm
             // 

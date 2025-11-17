@@ -56,6 +56,11 @@ namespace LMS
             dgvStaff.AllowUserToDeleteRows = false;
             dgvStaff.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
+            // Header style
+            dgvStaff.EnableHeadersVisualStyles = false;
+            dgvStaff.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(30, 144, 255); // DodgerBlue
+            dgvStaff.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+
             if (dgvStaff.Columns.Count == 0) return;
 
             // Same inline rename helper for consistency
@@ -233,9 +238,14 @@ namespace LMS
         #region === Search & Clear ===
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            SearchStaffs();
+        }
+
+        private void SearchStaffs()
+        {
             try
             {
-                string keyword = txtSearch.Text.Trim();
+                string keyword = txtSearch.Text.Trim().ToLower();
 
                 if (string.IsNullOrEmpty(keyword))
                 {
@@ -244,19 +254,23 @@ namespace LMS
                 }
 
                 var staffs = s.GetStaff();
-                var filtered = staffs.Where(s =>
-                    (!string.IsNullOrEmpty(s.FullName) && s.FullName.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    (!string.IsNullOrEmpty(s.Email) && s.Email.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    (!string.IsNullOrEmpty(s.Username) && s.Username.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0))
-                    .ToList();
+
+                var filtered = staffs.FindAll(b =>
+                    (b.FullName?.ToLower().Contains(keyword) ?? false) ||
+                    (b.Email?.ToLower().Contains(keyword) ?? false) ||
+                    (b.Phone?.ToLower().Contains(keyword) ?? false));
 
                 dgvStaff.DataSource = filtered;
             }
             catch (Exception ex)
             {
-                ShowError("Error searching staff", ex);
+                MessageBox.Show($"Error searching records: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+
 
         private void btnClear_Click(object sender, EventArgs e)
         {
@@ -319,5 +333,10 @@ namespace LMS
         //private void r1_Click(object sender, EventArgs e) => txtRole.Text = "Admin";
         //private void r2_Click(object sender, EventArgs e) => txtRole.Text = "Librarian";
         #endregion
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            SearchStaffs();
+        }
     }
 }

@@ -17,5 +17,18 @@ namespace LMS.Forms.Welcome
             InitializeComponent();
             this.Text = "Welcome to Library Management System";
         }
+
+        private void Welcome_SizeChanged(object sender, EventArgs e)
+        {
+            // Center the child panel inside the form
+            panelCenter.Left = (this.ClientSize.Width - panelCenter.Width) / 2;
+            panelCenter.Top = (this.ClientSize.Height - panelCenter.Height) / 2;
+        }
+
+
+        private void Welcome_Load(object sender, EventArgs e)
+        {
+            Welcome_SizeChanged(sender, e);
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using LMS.Class;
-using LMS.Forms.Welcome;
+﻿using LMS.Forms.Welcome;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -40,7 +39,22 @@ namespace LMS
                    $"- {DateTime.Now}";
 
             // Load default form
+            LMS_FORM_SizeChanged(sender, e);
             btnHome_Click(btnHome, EventArgs.Empty);
+        }
+
+        private void LMS_FORM_SizeChanged(object sender, EventArgs e)
+        {
+            CenterTitle();
+        }
+        private void LMS_FORM_Shown(object sender, EventArgs e)
+        {
+            CenterTitle();
+        }
+        private void CenterTitle()
+        {
+            lblTitle.AutoSize = true;
+            lblTitle.Left = (panelTitleBar.ClientSize.Width - lblTitle.Width) / 2;
         }
 
         protected override void OnResize(EventArgs e)
@@ -92,7 +106,7 @@ namespace LMS
 
             ResetButtonStyles();
             currentButton = clickedButton;
-            currentButton.BackColor = Color.Gray;
+            currentButton.BackColor = System.Drawing.Color.DarkBlue;
             currentButton.ForeColor = Color.White;
         }
 
@@ -102,8 +116,8 @@ namespace LMS
             {
                 if (control is Button button)
                 {
-                    button.BackColor = Color.DarkGray;
-                    button.ForeColor = Color.White;
+                    button.BackColor = System.Drawing.Color.SteelBlue;
+                    button.ForeColor = System.Drawing.Color.White;
                 }
             }
         }
@@ -125,6 +139,7 @@ namespace LMS
             childForm.Show();
 
             lblTitle.Text = childForm.Text;
+            CenterTitle();
         }
 
         // ===========================
@@ -141,5 +156,7 @@ namespace LMS
 
         private void btnStaffs_Click(object sender, EventArgs e)
             => OpenChildForm(new StaffsForm(loggedInStaff), sender);
+
+
     }
 }

@@ -3,6 +3,7 @@ using LMS.Forms.BorrowReturn;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace LMS
@@ -117,6 +118,11 @@ namespace LMS
             dgvBorrower.AllowUserToAddRows = false;
             dgvBorrower.AllowUserToDeleteRows = false;
             dgvBorrower.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Header style
+            dgvBorrower.EnableHeadersVisualStyles = false;
+            dgvBorrower.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(30, 144, 255); // DodgerBlue
+            dgvBorrower.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
 
             if (dgvBorrower.Columns.Count == 0) return;
 
@@ -298,14 +304,22 @@ namespace LMS
             btnBorrow.Enabled = true;
             btnReturn.Enabled = false;
             btnDelete.Enabled = false;
+            rbtnAll.Checked = true;
         }
 
         // ===================== SEARCH & FILTER =====================
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            SearchBorrowers();
+        }
+
+
+        private void SearchBorrowers()
+        {
             try
             {
                 string keyword = txtSearch.Text.Trim().ToLower();
+
                 if (string.IsNullOrEmpty(keyword))
                 {
                     LoadBorrowers();
@@ -313,19 +327,22 @@ namespace LMS
                 }
 
                 var borrowers = br.GetBorrowRecords();
+
                 var filtered = borrowers.FindAll(b =>
                     (b.BorrowerName?.ToLower().Contains(keyword) ?? false) ||
                     (b.BookTitle?.ToLower().Contains(keyword) ?? false) ||
-                    (b.Status?.ToLower().Contains(keyword) ?? false));
+                    (b.BorrowerContact?.ToLower().Contains(keyword) ?? false));
 
                 dgvBorrower.DataSource = filtered;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error searching records: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error searching records: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
+
         private void rbtnBorrowed_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtnBorrowed.Checked)
@@ -342,6 +359,11 @@ namespace LMS
         {
             if (rbtnAll.Checked)
                 LoadBorrowers(); // NULL → show all
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            SearchBorrowers();
         }
     }
 }

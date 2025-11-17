@@ -51,23 +51,29 @@
             this.rbtnReturned = new System.Windows.Forms.RadioButton();
             this.rbtnAll = new System.Windows.Forms.RadioButton();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBorrower)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvBorrower
             // 
+            this.dgvBorrower.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvBorrower.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBorrower.Location = new System.Drawing.Point(0, 205);
             this.dgvBorrower.Margin = new System.Windows.Forms.Padding(4);
             this.dgvBorrower.Name = "dgvBorrower";
             this.dgvBorrower.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBorrower.Size = new System.Drawing.Size(844, 273);
+            this.dgvBorrower.Size = new System.Drawing.Size(844, 262);
             this.dgvBorrower.TabIndex = 9;
             this.dgvBorrower.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBorrower_CellClick);
             // 
             // dtpBorrowDate
             // 
+            this.dtpBorrowDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.dtpBorrowDate.CustomFormat = "dd-MM-yyyy";
             this.dtpBorrowDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpBorrowDate.Location = new System.Drawing.Point(702, 12);
@@ -103,10 +109,11 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(564, 168);
+            this.txtSearch.Location = new System.Drawing.Point(221, 3);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(230, 28);
             this.txtSearch.TabIndex = 7;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // label6
             // 
@@ -163,7 +170,7 @@
             // btnSearch
             // 
             this.btnSearch.Image = global::LMS.Properties.Resources.search_30px;
-            this.btnSearch.Location = new System.Drawing.Point(800, 164);
+            this.btnSearch.Location = new System.Drawing.Point(457, -1);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(34, 34);
             this.btnSearch.TabIndex = 8;
@@ -182,6 +189,9 @@
             // 
             // btnReturn
             // 
+            this.btnReturn.BackColor = System.Drawing.SystemColors.Control;
+            this.btnReturn.FlatAppearance.BorderSize = 0;
+            this.btnReturn.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReturn.Image = global::LMS.Properties.Resources.ok_30px;
             this.btnReturn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReturn.Location = new System.Drawing.Point(124, 164);
@@ -190,11 +200,14 @@
             this.btnReturn.TabIndex = 5;
             this.btnReturn.Text = "Return";
             this.btnReturn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.UseVisualStyleBackColor = false;
             this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
             // btnBorrow
             // 
+            this.btnBorrow.BackColor = System.Drawing.SystemColors.Control;
+            this.btnBorrow.FlatAppearance.BorderSize = 0;
+            this.btnBorrow.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBorrow.Image = global::LMS.Properties.Resources.add_30px;
             this.btnBorrow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBorrow.Location = new System.Drawing.Point(18, 164);
@@ -203,7 +216,7 @@
             this.btnBorrow.TabIndex = 4;
             this.btnBorrow.Text = "Save";
             this.btnBorrow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnBorrow.UseVisualStyleBackColor = true;
+            this.btnBorrow.UseVisualStyleBackColor = false;
             this.btnBorrow.Click += new System.EventHandler(this.btnBorrow_Click);
             // 
             // label1
@@ -218,6 +231,7 @@
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.txtStatus);
             this.panel1.Controls.Add(this.txtBContact);
@@ -246,7 +260,7 @@
             // rbtnBorrowed
             // 
             this.rbtnBorrowed.AutoSize = true;
-            this.rbtnBorrowed.Location = new System.Drawing.Point(394, 168);
+            this.rbtnBorrowed.Location = new System.Drawing.Point(51, 6);
             this.rbtnBorrowed.Name = "rbtnBorrowed";
             this.rbtnBorrowed.Size = new System.Drawing.Size(80, 23);
             this.rbtnBorrowed.TabIndex = 45;
@@ -258,7 +272,7 @@
             // rbtnReturned
             // 
             this.rbtnReturned.AutoSize = true;
-            this.rbtnReturned.Location = new System.Drawing.Point(480, 168);
+            this.rbtnReturned.Location = new System.Drawing.Point(137, 6);
             this.rbtnReturned.Name = "rbtnReturned";
             this.rbtnReturned.Size = new System.Drawing.Size(78, 23);
             this.rbtnReturned.TabIndex = 46;
@@ -270,7 +284,7 @@
             // rbtnAll
             // 
             this.rbtnAll.AutoSize = true;
-            this.rbtnAll.Location = new System.Drawing.Point(346, 168);
+            this.rbtnAll.Location = new System.Drawing.Point(3, 6);
             this.rbtnAll.Name = "rbtnAll";
             this.rbtnAll.Size = new System.Drawing.Size(42, 23);
             this.rbtnAll.TabIndex = 47;
@@ -281,6 +295,9 @@
             // 
             // btnDelete
             // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.Control;
+            this.btnDelete.FlatAppearance.BorderSize = 0;
+            this.btnDelete.Font = new System.Drawing.Font("Khmer OS Battambang", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.Image = global::LMS.Properties.Resources.delete_bin_30px;
             this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDelete.Location = new System.Drawing.Point(230, 164);
@@ -289,24 +306,34 @@
             this.btnDelete.TabIndex = 48;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.rbtnAll);
+            this.panel2.Controls.Add(this.txtSearch);
+            this.panel2.Controls.Add(this.btnSearch);
+            this.panel2.Controls.Add(this.rbtnBorrowed);
+            this.panel2.Controls.Add(this.rbtnReturned);
+            this.panel2.Location = new System.Drawing.Point(331, 164);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(493, 34);
+            this.panel2.TabIndex = 49;
             // 
             // BorrowReturnForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 480);
+            this.ControlBox = false;
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.rbtnAll);
-            this.Controls.Add(this.rbtnBorrowed);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.rbtnReturned);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.btnBorrow);
-            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.dtpBorrowDate);
             this.Controls.Add(this.dgvBorrower);
             this.Font = new System.Drawing.Font("Khmer OS Battambang", 8.25F);
@@ -318,6 +345,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvBorrower)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,5 +377,6 @@
         private System.Windows.Forms.RadioButton rbtnAll;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Panel panel2;
     }
 }
