@@ -11,17 +11,17 @@ namespace LMS
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            StaffClass s = new StaffClass
-            {
-                StaffID = 3,
-                FullName = "Vang Sokchheng",
-                Username = "sokchheng",
-                Password = "123",
-                Role = "Admin"
-            };
+            //StaffClass s = new StaffClass
+            //{
+            //    StaffID = 3,
+            //    FullName = "Vang Sokchheng",
+            //    Username = "sokchheng",
+            //    Password = "123",
+            //    Role = "Admin"
+            //};
 
-            Application.Run(new LMS_FORM(s));
-            //Application.Run(new SplashScreen());
+            //Application.Run(new LMS_FORM(s));
+            Application.Run(new SplashScreen());
         }
     }
 }
