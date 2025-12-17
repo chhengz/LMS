@@ -1,11 +1,8 @@
----
 
-```markdown
 # 📚 Library Management System (LMS)
 
 A modern **C# Windows Forms Application** for managing a library's books, borrowers, and staff accounts — built with **.NET Framework 4.7.2** and **SQL Server**.
 
----
 
 ## 🚀 Features
 
@@ -143,9 +140,7 @@ VALUES ('Admin User', 'admin@lms.com', '012345678', 'Admin', 'admin', '123', GET
 
 ---
 
-## 📸 Screenshots (Optional)
-
-Add your screenshots here (e.g. login screen, dashboard, staff management).
+## 📸 Screenshots
 
 ```
 ![Login Form](images/login_preview.png)
